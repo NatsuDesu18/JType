@@ -1,80 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn Japanese by Typing</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Typing Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        #word {
+            font-size: 30px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        #feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        #score {
+            text-align: center;
+            font-size: 18px;
+        }
+        input[type="text"] {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            height: 20px;
+            margin: 10px 0;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0;
+            border-radius: 4px;
+        }
+        select {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans">
-  <!-- Hero Section -->
-  <header class="text-center py-12">
-    <h1 class="text-5xl font-extrabold mb-4">Learn Japanese by Typing</h1>
-    <p class="text-xl mb-6">Practice your Japanese typing skills with English-to-Japanese words or listen to the pronunciation.</p>
-    <button id="startButton" class="bg-blue-600 text-white text-lg px-6 py-3 rounded-lg hover:bg-blue-700 transition">Get Started</button>
-  </header>
+<body>
 
-  <!-- Typing Practice Section -->
-  <main id="mainSection" class="flex flex-col items-center justify-center mt-16 hidden">
-    <div id="englishWord" class="text-3xl font-semibold mb-4"></div>
-    <audio id="audio" class="mb-4" controls>
-      <source id="audioSource" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <input type="text" id="userInput" placeholder="Type the Japanese word..." class="text-lg p-3 rounded-lg mb-4 w-1/2" />
-    <div id="feedback" class="text-lg mt-4"></div>
-    <button id="nextWordButton" class="mt-4 bg-blue-600 text-white text-lg px-6 py-3 rounded-lg hover:bg-blue-700 transition hidden">Next Word</button>
-  </main>
+<div class="container">
+    <h1>Japanese Typing Practice</h1>
 
-  <footer class="text-center mt-12 text-sm text-gray-500">© 2025 Learn Japanese Typing. All rights reserved.</footer>
+    <label for="category">Choose a category:</label>
+    <select id="category" onchange="changeCategory()">
+        <option value="animals">Animals</option>
+        <option value="jlptN5">JLPT N5</option>
+        <option value="jlptN4">JLPT N4</option>
+    </select>
 
-  <script>
-    const words = [
-      { english: "cat", japanese: "ねこ", audio: "https://www.example.com/audio/cat.mp3" },
-      { english: "dog", japanese: "いぬ", audio: "https://www.example.com/audio/dog.mp3" },
-      { english: "apple", japanese: "りんご", audio: "https://www.example.com/audio/apple.mp3" }
-    ];
+    <div id="word"></div>
+    <input type="text" id="answer" placeholder="Type the word in Japanese" oninput="checkAnswer()">
+    <div id="feedback"></div>
+    <div id="score">Score: 0 / 0</div>
 
-    let currentWordIndex = 0;
+    <div class="progress-bar">
+        <div id="progress-bar" class="progress-bar-inner"></div>
+    </div>
+</div>
 
-    document.getElementById('startButton').addEventListener('click', function() {
-      document.getElementById('startButton').classList.add('hidden');
-      document.getElementById('mainSection').classList.remove('hidden');
-      showWord();
+<script>
+// Word categories will be loaded from the JSON file
+let categories = {};
+let currentCategory = 'animals';
+let currentWordIndex = 0;
+let score = 0;
+
+// Load the word lists from the JSON file
+fetch('vocabulary.json')
+    .then(response => response.json())
+    .then(data => {
+        categories = data;
+        shuffleWords(categories[currentCategory]);
+        updateScore();
+        updateProgressBar();
+        showNextWord();
+    })
+    .catch(error => {
+        console.error("Error loading the vocabulary file:", error);
     });
 
-    document.getElementById('userInput').addEventListener('input', function() {
-      const userText = this.value.trim();
-      const correctAnswer = words[currentWordIndex].japanese;
-      const feedback = document.getElementById('feedback');
+// Handle category change
+function changeCategory() {
+    const selectedCategory = document.getElementById('category').value;
+    currentCategory = selectedCategory;
+    currentWordIndex = 0;  // Reset to first word in new category
+    score = 0;              // Reset score
+    shuffleWords(categories[currentCategory]);  // Shuffle the words of the selected category
+    updateScore();  // Update score display
+    showNextWord();  // Show the first word of the new category
+}
 
-      if (userText === correctAnswer) {
-        feedback.textContent = 'Correct! Well done.';
-        feedback.classList.add('text-green-600');
-        feedback.classList.remove('text-red-600');
-        document.getElementById('nextWordButton').classList.remove('hidden');
-      } else {
-        feedback.textContent = 'Try again!';
-        feedback.classList.add('text-red-600');
-        feedback.classList.remove('text-green-600');
-      }
-    });
+// Show next word
+function showNextWord() {
+    const word = categories[currentCategory][currentWordIndex];
+    document.getElementById('word').textContent = word.english;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('answer').value = '';
+    document.getElementById('answer').focus();
+    const audio = new Audio(word.audio);
+    audio.play();
+    updateProgressBar();
+}
 
-    document.getElementById('nextWordButton').addEventListener('click', function() {
-      currentWordIndex = (currentWordIndex + 1) % words.length;
-      showWord();
-      document.getElementById('nextWordButton').classList.add('hidden');
-      document.getElementById('userInput').value = '';
-      document.getElementById('feedback').textContent = '';
-    });
-
-    function showWord() {
-      const word = words[currentWordIndex];
-      document.getElementById('englishWord').textContent = word.english;
-      document.getElementById('audioSource').src = word.audio;
-      document.getElementById('audio').load();
-      document.getElementById('audio').play();
+// Shuffle words randomly
+function shuffleWords(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-  </script>
+}
+
+// Check the typed answer
+function checkAnswer() {
+    const input = document.getElementById('answer').value.trim();
+    const word = categories[currentCategory][currentWordIndex];
+
+    if (word.answers.includes(input)) {
+        score++;
+        document.getElementById('feedback').textContent = '✅ Correct!';
+        currentWordIndex++;
+        updateScore();
+
+        if (currentWordIndex >= categories[currentCategory].length) {
+            document.getElementById('feedback').textContent = `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
+            currentWordIndex = 0;
+            score = 0;
+            setTimeout(() => {
+                shuffleWords(categories[currentCategory]);
+                updateScore();
+                showNextWord();
+            }, 3000);
+        } else {
+            setTimeout(showNextWord, 1000);
+        }
+    } else {
+        document.getElementById('feedback').textContent = '❌ Try again!';
+    }
+}
+
+// Update the score display
+function updateScore() {
+    document.getElementById('score').textContent = `Score: ${score} / ${categories[currentCategory].length}`;
+}
+
+// Update the progress bar
+function updateProgressBar() {
+    const progress = (currentWordIndex / categories[currentCategory].length) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+}
+
+</script>
+
 </body>
 </html>
