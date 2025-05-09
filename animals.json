@@ -1,5 +1,77 @@
 [
-    { "english": "cat", "answers": ["ねこ", "猫"], "audio": "https://example.com/cat.mp3" },
-    { "english": "dog", "answers": ["いぬ", "犬"], "audio": "https://example.com/dog.mp3" },
-    { "english": "elephant", "answers": ["ぞう", "象"], "audio": "https://example.com/elephant.mp3" }
+  {
+    "english": "cat",
+    "answers": ["ねこ", "ネコ", "猫"],
+    "audio": "audio/animal_cat.mp3"
+  },
+  {
+    "english": "dog",
+    "answers": ["いぬ", "イヌ", "犬"],
+    "audio": "audio/animal_dog.mp3"
+  },
+  {
+    "english": "bird",
+    "answers": ["とり", "トリ", "鳥"],
+    "audio": "audio/animal_bird.mp3"
+  },
+  {
+    "english": "cow",
+    "answers": ["うし", "ウシ", "牛"],
+    "audio": "audio/animal_cow.mp3"
+  },
+  {
+    "english": "horse",
+    "answers": ["うま", "ウマ", "馬"],
+    "audio": "audio/animal_horse.mp3"
+  },
+  {
+    "english": "monkey",
+    "answers": ["さる", "サル", "猿"],
+    "audio": "audio/animal_monkey.mp3"
+  },
+  {
+    "english": "rabbit",
+    "answers": ["うさぎ", "ウサギ", "兎"],
+    "audio": "audio/animal_rabbit.mp3"
+  },
+  {
+    "english": "elephant",
+    "answers": ["ぞう", "ゾウ", "象"],
+    "audio": "audio/animal_elephant.mp3"
+  },
+  {
+    "english": "tiger",
+    "answers": ["とら", "トラ", "虎"],
+    "audio": "audio/animal_tiger.mp3"
+  },
+  {
+    "english": "fox",
+    "answers": ["きつね", "キツネ", "狐"],
+    "audio": "audio/animal_fox.mp3"
+  },
+  {
+    "english": "bear",
+    "answers": ["くま", "クマ", "熊"],
+    "audio": "audio/animal_bear.mp3"
+  },
+  {
+    "english": "sheep",
+    "answers": ["ひつじ", "ヒツジ", "羊"],
+    "audio": "audio/animal_sheep.mp3"
+  },
+  {
+    "english": "lion",
+    "answers": ["らいおん", "ライオン"],
+    "audio": "audio/animal_lion.mp3"
+  },
+  {
+    "english": "giraffe",
+    "answers": ["きりん", "キリン", "麒麟"],
+    "audio": "audio/animal_giraffe.mp3"
+  },
+  {
+    "english": "pig",
+    "answers": ["ぶた", "ブタ", "豚"],
+    "audio": "audio/animal_pig.mp3"
+  }
 ]
