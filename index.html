@@ -94,7 +94,7 @@
     <select id="category" onchange="changeCategory()">
         <option value="animals">Animals</option>
         <option value="jlptN5">JLPT N5</option>
-        <option value="jlptN4">JLPT N4</option>
+        <option value="food">Food</option>
         <option value="jlptN1">JLPT N1</option>
     </select>
 
@@ -122,7 +122,7 @@ let score = 0;
 let currentHint = '';
 
 // Load the word lists from the JSON file
-fetch('vocabulary.json')
+fetch('jlptN1.json')
     .then(response => response.json())
     .then(data => {
         categories = data;
@@ -134,7 +134,42 @@ fetch('vocabulary.json')
     .catch(error => {
         console.error("Error loading the vocabulary file:", error);
     });
-
+fetch('animals.json')
+    .then(response => response.json())
+    .then(data => {
+        categories = data;
+        shuffleWords(categories[currentCategory]);
+        updateScore();
+        updateProgressBar();
+        showNextWord();
+    })
+    .catch(error => {
+        console.error("Error loading the vocabulary file:", error);
+    });
+fetch('food.json')
+    .then(response => response.json())
+    .then(data => {
+        categories = data;
+        shuffleWords(categories[currentCategory]);
+        updateScore();
+        updateProgressBar();
+        showNextWord();
+    })
+    .catch(error => {
+        console.error("Error loading the vocabulary file:", error);
+    });
+fetch('jlptN5.json')
+    .then(response => response.json())
+    .then(data => {
+        categories = data;
+        shuffleWords(categories[currentCategory]);
+        updateScore();
+        updateProgressBar();
+        showNextWord();
+    })
+    .catch(error => {
+        console.error("Error loading the vocabulary file:", error);
+    });
 // Handle category change
 function changeCategory() {
     const selectedCategory = document.getElementById('category').value;
