@@ -1,96 +1,80 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.4">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn Japanese by Typing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Learn Japanese by Typing&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="bg-gray-100 text-gray-900 font-sans"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Hero Section --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;header class="text-center py-12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1 class="text-5xl font-extrabold mb-4"&gt;Learn Japanese by Typing&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="text-xl mb-6"&gt;Practice your Japanese typing skills with English-to-Japanese words or listen to the pronunciation.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="startButton" class="bg-blue-600 text-white text-lg px-6 py-3 rounded-lg hover:bg-blue-700 transition"&gt;Get Started&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Typing Practice Section --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;main id="mainSection" class="flex flex-col items-center justify-center mt-16 hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="englishWord" class="text-3xl font-semibold mb-4"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;audio id="audio" class="mb-4" controls&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;source id="audioSource" type="audio/mpeg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>Your browser does not support the audio element.</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/audio&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="text" id="userInput" placeholder="Type the Japanese word..." class="text-lg p-3 rounded-lg mb-4 w-1/2" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="feedback" class="text-lg mt-4"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="nextWordButton" class="mt-4 bg-blue-600 text-white text-lg px-6 py-3 rounded-lg hover:bg-blue-700 transition hidden"&gt;Next Word&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;footer class="text-center mt-12 text-sm text-gray-500"&gt;© 2025 Learn Japanese Typing. All rights reserved.&lt;/footer&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const words = [</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ english: "cat", japanese: "ねこ", audio: "https://www.example.com/audio/cat.mp3" },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ english: "dog", japanese: "いぬ", audio: "https://www.example.com/audio/dog.mp3" },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ english: "apple", japanese: "りんご", audio: "https://www.example.com/audio/apple.mp3" }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let currentWordIndex = 0;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('startButton').addEventListener('click', function() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('startButton').classList.add('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('mainSection').classList.remove('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>showWord();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('userInput').addEventListener('input', function() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const userText = this.value.trim();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const correctAnswer = words[currentWordIndex].japanese;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const feedback = document.getElementById('feedback');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (userText === correctAnswer) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>feedback.textContent = 'Correct! Well done.';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>feedback.classList.add('text-green-600');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>feedback.classList.remove('text-red-600');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('nextWordButton').classList.remove('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>feedback.textContent = 'Try again!';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>feedback.classList.add('text-red-600');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>feedback.classList.remove('text-green-600');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('nextWordButton').addEventListener('click', function() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>currentWordIndex = (currentWordIndex + 1) % words.length;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>showWord();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('nextWordButton').classList.add('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('userInput').value = '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('feedback').textContent = '';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function showWord() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const word = words[currentWordIndex];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('englishWord').textContent = word.english;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('audioSource').src = word.audio;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('audio').load();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('audio').play();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<body class="bg-gray-100 text-gray-900 font-sans">
+  <!-- Hero Section -->
+  <header class="text-center py-12">
+    <h1 class="text-5xl font-extrabold mb-4">Learn Japanese by Typing</h1>
+    <p class="text-xl mb-6">Practice your Japanese typing skills with English-to-Japanese words or listen to the pronunciation.</p>
+    <button id="startButton" class="bg-blue-600 text-white text-lg px-6 py-3 rounded-lg hover:bg-blue-700 transition">Get Started</button>
+  </header>
+
+  <!-- Typing Practice Section -->
+  <main id="mainSection" class="flex flex-col items-center justify-center mt-16 hidden">
+    <div id="englishWord" class="text-3xl font-semibold mb-4"></div>
+    <audio id="audio" class="mb-4" controls>
+      <source id="audioSource" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <input type="text" id="userInput" placeholder="Type the Japanese word..." class="text-lg p-3 rounded-lg mb-4 w-1/2" />
+    <div id="feedback" class="text-lg mt-4"></div>
+    <button id="nextWordButton" class="mt-4 bg-blue-600 text-white text-lg px-6 py-3 rounded-lg hover:bg-blue-700 transition hidden">Next Word</button>
+  </main>
+
+  <footer class="text-center mt-12 text-sm text-gray-500">© 2025 Learn Japanese Typing. All rights reserved.</footer>
+
+  <script>
+    const words = [
+      { english: "cat", japanese: "ねこ", audio: "https://www.example.com/audio/cat.mp3" },
+      { english: "dog", japanese: "いぬ", audio: "https://www.example.com/audio/dog.mp3" },
+      { english: "apple", japanese: "りんご", audio: "https://www.example.com/audio/apple.mp3" }
+    ];
+
+    let currentWordIndex = 0;
+
+    document.getElementById('startButton').addEventListener('click', function() {
+      document.getElementById('startButton').classList.add('hidden');
+      document.getElementById('mainSection').classList.remove('hidden');
+      showWord();
+    });
+
+    document.getElementById('userInput').addEventListener('input', function() {
+      const userText = this.value.trim();
+      const correctAnswer = words[currentWordIndex].japanese;
+      const feedback = document.getElementById('feedback');
+
+      if (userText === correctAnswer) {
+        feedback.textContent = 'Correct! Well done.';
+        feedback.classList.add('text-green-600');
+        feedback.classList.remove('text-red-600');
+        document.getElementById('nextWordButton').classList.remove('hidden');
+      } else {
+        feedback.textContent = 'Try again!';
+        feedback.classList.add('text-red-600');
+        feedback.classList.remove('text-green-600');
+      }
+    });
+
+    document.getElementById('nextWordButton').addEventListener('click', function() {
+      currentWordIndex = (currentWordIndex + 1) % words.length;
+      showWord();
+      document.getElementById('nextWordButton').classList.add('hidden');
+      document.getElementById('userInput').value = '';
+      document.getElementById('feedback').textContent = '';
+    });
+
+    function showWord() {
+      const word = words[currentWordIndex];
+      document.getElementById('englishWord').textContent = word.english;
+      document.getElementById('audioSource').src = word.audio;
+      document.getElementById('audio').load();
+      document.getElementById('audio').play();
+    }
+  </script>
 </body>
 </html>
