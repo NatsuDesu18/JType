@@ -1,0 +1,80 @@
+{
+    "animals": [
+        {
+            "english": "cat",
+            "answers": [
+                "ねこ",
+                "猫"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=ねこ&kanji=猫"
+        },
+        {
+            "english": "dog",
+            "answers": [
+                "いぬ",
+                "犬"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=いぬ&kanji=犬"
+        },
+        {
+            "english": "bird",
+            "answers": [
+                "とり",
+                "鳥"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=とり&kanji=鳥"
+        }
+    ],
+    "jlptN5": [
+        {
+            "english": "water",
+            "answers": [
+                "みず",
+                "水"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=みず&kanji=水"
+        },
+        {
+            "english": "book",
+            "answers": [
+                "ほん",
+                "本"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=ほん&kanji=本"
+        },
+        {
+            "english": "person",
+            "answers": [
+                "ひと",
+                "人"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=ひと&kanji=人"
+        }
+    ],
+    "jlptN4": [
+        {
+            "english": "teacher",
+            "answers": [
+                "せんせい",
+                "先生"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=せんせい&kanji=先生"
+        },
+        {
+            "english": "friend",
+            "answers": [
+                "ともだち",
+                "友達"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=ともだち&kanji=友達"
+        },
+        {
+            "english": "school",
+            "answers": [
+                "がっこう",
+                "学校"
+            ],
+            "audio": "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kana=がっこう&kanji=学校"
+        }
+    ]
+}

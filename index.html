@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Typing Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        #word {
+            font-size: 30px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        #feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        #score {
+            text-align: center;
+            font-size: 18px;
+        }
+        input[type="text"] {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            height: 20px;
+            margin: 10px 0;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0;
+            border-radius: 4px;
+        }
+        select {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Japanese Typing Practice</h1>
+
+    <label for="category">Choose a category:</label>
+    <select id="category" onchange="changeCategory()">
+        <option value="animals">Animals</option>
+        <option value="food">Food</option>
+        <option value="jlptN5">JLPT N5</option>
+        <option value="jlptN1">JLPT N1</option>
+    </select>
+
+    <div id="word"></div>
+    <input type="text" id="answer" placeholder="Type the word in Japanese" oninput="checkAnswer()">
+    <div id="feedback"></div>
+    <div id="score">Score: 0 / 0</div>
+
+    <div class="progress-bar">
+        <div id="progress-bar" class="progress-bar-inner"></div>
+    </div>
+</div>
+
+<script>
+// Word categories will be loaded from the respective JSON files
+let categories = {};
+let currentCategory = 'animals';
+let currentWordIndex = 0;
+let score = 0;
+
+// Load the word lists from the selected category's JSON file
+function loadVocabulary(category) {
+    fetch(`${category}.json`)
+        .then(response => response.json())
+        .then(data => {
+            categories[category] = data;
+            shuffleWords(categories[category]);
+            updateScore();
+            updateProgressBar();
+            showNextWord();
+        })
+        .catch(error => {
+            console.error("Error loading the vocabulary file:", error);
+        });
+}
+
+// Handle category change
+function changeCategory() {
+    const selectedCategory = document.getElementById('category').value;
+    currentCategory = selectedCategory;
+    currentWordIndex = 0;  // Reset to first word in new category
+    score = 0;              // Reset score
+    loadVocabulary(currentCategory);  // Load the vocabulary for the selected category
+}
+
+// Show next word
+function showNextWord() {
+    const word = categories[currentCategory][currentWordIndex];
+    document.getElementById('word').textContent = word.english;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('answer').value = '';
+    document.getElementById('answer').focus();
+    const audio = new Audio(word.audio);
+    audio.play();
+    updateProgressBar();
+}
+
+// Shuffle words randomly
+function shuffleWords(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Check the typed answer
+function checkAnswer() {
+    const input = document.getElementById('answer').value.trim();
+    const word = categories[currentCategory][currentWordIndex];
+
+    if (word.answers.includes(input)) {
+        score++;
+        document.getElementById('feedback').textContent = '✅ Correct!';
+        currentWordIndex++;
+        updateScore();
+
+        if (currentWordIndex >= categories[currentCategory].length) {
+            document.getElementById('feedback').textContent = `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
+            currentWordIndex = 0;
+            score = 0;
+            setTimeout(() => {
+                shuffleWords(categories[currentCategory]);
+                updateScore();
+                showNextWord();
+            }, 3000);
+        } else {
+            setTimeout(showNextWord, 1000);
+        }
+    } else {
+        document.getElementById('feedback').textContent = '❌ Try again!';
+    }
+}
+
+// Update the score display
+function updateScore() {
+    document.getElementById('score').textContent = `Score: ${score} / ${categories[currentCategory].length}`;
+}
+
+// Update the progress bar
+function updateProgressBar() {
+    const progress = (currentWordIndex / categories[currentCategory].length) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+}
+
+// Initially load the default category (animals)
+loadVocabulary(currentCategory);
+
+</script>
+
+</body>
+</html>
