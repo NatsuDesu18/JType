@@ -64,17 +64,20 @@
             width: 100%;
             border-radius: 4px;
         }
-        .button-container {
-            text-align: center;
-        }
-        button {
-            padding: 10px 20px;
+        #hint {
             font-size: 16px;
             margin-top: 10px;
+            text-align: center;
+            color: #888;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
             cursor: pointer;
+            border: none;
             background-color: #4caf50;
             color: white;
-            border: none;
             border-radius: 4px;
         }
         button:hover {
@@ -90,9 +93,9 @@
     <label for="category">Choose a category:</label>
     <select id="category" onchange="changeCategory()">
         <option value="animals">Animals</option>
-        <option value="food">Food</option>
         <option value="jlptN5">JLPT N5</option>
-        <option value="jlptN1" selected>JLPT N1</option>
+        <option value="jlptN4">JLPT N4</option>
+        <option value="jlptN1">JLPT N1</option>
     </select>
 
     <div id="word"></div>
@@ -104,58 +107,32 @@
         <div id="progress-bar" class="progress-bar-inner"></div>
     </div>
 
-    <div class="button-container">
-        <button id="skipButton" onclick="skipWord()">Skip</button>
-    </div>
+    <!-- Hint and Skip Buttons -->
+    <button id="hintButton" onclick="showHint()">Show Hint</button>
+    <button id="skipButton" onclick="skipWord()">Skip Word</button>
+    <div id="hint"></div>
 </div>
 
 <script>
-// Word categories will be loaded from the JSON files
+// Word categories will be loaded from the JSON file
 let categories = {};
-let currentCategory = 'jlptN1'; // Set default category to 'jlptN1'
+let currentCategory = 'jlptN1';
 let currentWordIndex = 0;
 let score = 0;
-let isAnswerSubmitted = false;  // To check if the answer has been submitted
+let currentHint = '';
 
-// Load the word lists from the JSON files
-fetch('animals.json')
+// Load the word lists from the JSON file
+fetch('vocabulary.json')
     .then(response => response.json())
     .then(data => {
-        categories.animals = data;
-    })
-    .catch(error => {
-        console.error("Error loading the animals vocabulary file:", error);
-    });
-
-fetch('food.json')
-    .then(response => response.json())
-    .then(data => {
-        categories.food = data;
-    })
-    .catch(error => {
-        console.error("Error loading the food vocabulary file:", error);
-    });
-
-fetch('jlptN5.json')
-    .then(response => response.json())
-    .then(data => {
-        categories.jlptN5 = data;
-    })
-    .catch(error => {
-        console.error("Error loading the JLPT N5 vocabulary file:", error);
-    });
-
-fetch('jlptN1.json')
-    .then(response => response.json())
-    .then(data => {
-        categories.jlptN1 = data;
+        categories = data;
         shuffleWords(categories[currentCategory]);
         updateScore();
         updateProgressBar();
         showNextWord();
     })
     .catch(error => {
-        console.error("Error loading the JLPT N1 vocabulary file:", error);
+        console.error("Error loading the vocabulary file:", error);
     });
 
 // Handle category change
@@ -164,6 +141,7 @@ function changeCategory() {
     currentCategory = selectedCategory;
     currentWordIndex = 0;  // Reset to first word in new category
     score = 0;              // Reset score
+    currentHint = '';       // Clear hint
     shuffleWords(categories[currentCategory]);  // Shuffle the words of the selected category
     updateScore();  // Update score display
     showNextWord();  // Show the first word of the new category
@@ -176,10 +154,11 @@ function showNextWord() {
     document.getElementById('feedback').textContent = '';
     document.getElementById('answer').value = '';
     document.getElementById('answer').focus();
-    isAnswerSubmitted = false;
     const audio = new Audio(word.audio);
     audio.play();
     updateProgressBar();
+    currentHint = word.japanese[0]; // Set the hint to the first letter of the Japanese word
+    document.getElementById('hint').textContent = ''; // Clear hint initially
 }
 
 // Shuffle words randomly
@@ -192,12 +171,10 @@ function shuffleWords(array) {
 
 // Check the typed answer
 function checkAnswer() {
-    if (isAnswerSubmitted) return;  // If answer has already been submitted, prevent further input
-
     const input = document.getElementById('answer').value.trim();
     const word = categories[currentCategory][currentWordIndex];
 
-    if (input && word.answers.includes(input)) {
+    if (word.answers.includes(input)) {
         score++;
         document.getElementById('feedback').textContent = '✅ Correct!';
         currentWordIndex++;
@@ -218,13 +195,19 @@ function checkAnswer() {
     } else {
         document.getElementById('feedback').textContent = '❌ Try again!';
     }
-    isAnswerSubmitted = true;
 }
 
-// Skip word (mark it as wrong and show the answer)
+// Show the hint (first letter of the word)
+function showHint() {
+    if (currentHint) {
+        document.getElementById('hint').textContent = `Hint: The word starts with "${currentHint}"`;
+    }
+}
+
+// Skip the current word
 function skipWord() {
     const word = categories[currentCategory][currentWordIndex];
-    document.getElementById('feedback').textContent = `❌ Incorrect! The correct answer is: ${word.japanese}`;
+    document.getElementById('feedback').textContent = `❌ Incorrect! The correct answer is "${word.japanese}"`;
     currentWordIndex++;
     updateScore();
 
@@ -252,6 +235,7 @@ function updateProgressBar() {
     const progress = (currentWordIndex / categories[currentCategory].length) * 100;
     document.getElementById('progress-bar').style.width = `${progress}%`;
 }
+
 </script>
 
 </body>
