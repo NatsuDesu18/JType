@@ -3,149 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japanese Typing Game</title>
+    <title>Japanese Typing Practice</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f3f3f3;
             margin: 0;
-            flex-direction: column;
+            padding: 20px;
         }
-
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
         h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
+            text-align: center;
         }
-
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 20px;
-            border-radius: 5px;
+        #word {
+            font-size: 30px;
+            text-align: center;
+            margin: 20px 0;
         }
-
-        .button:hover {
-            background-color: #45a049;
+        #feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 10px 0;
         }
-
-        .word-container {
-            font-size: 24px;
-            margin: 20px;
+        #score {
+            text-align: center;
+            font-size: 18px;
         }
-
-        .input-container {
-            margin-top: 20px;
-        }
-
-        #answer {
+        input[type="text"] {
             font-size: 18px;
             padding: 10px;
-            margin-top: 10px;
-        }
-
-        #score {
-            font-size: 18px;
-            margin-top: 20px;
-        }
-
-        #progress-bar {
             width: 100%;
-            background-color: #ddd;
-            height: 20px;
-            border-radius: 10px;
-            margin-top: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
-
-        #progress-bar-filled {
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            height: 20px;
+            margin: 10px 0;
+        }
+        .progress-bar-inner {
             height: 100%;
-            background-color: #4CAF50;
-            border-radius: 10px;
+            background-color: #4caf50;
             width: 0;
+            border-radius: 4px;
+        }
+        select {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <h1>Japanese Typing Game</h1>
-    <div>
-        <button class="button" onclick="loadVocabulary('animals')">Animals</button>
-        <button class="button" onclick="loadVocabulary('food')">Food</button>
-        <button class="button" onclick="loadVocabulary('n5')">JLPT N5</button>
-        <button class="button" onclick="loadVocabulary('n1')">JLPT N1</button>
+
+<div class="container">
+    <h1>Japanese Typing Practice</h1>
+
+    <label for="category">Choose a category:</label>
+    <select id="category" onchange="changeCategory()">
+        <option value="animals">Animals</option>
+        <option value="food">Food</option>
+        <option value="jlptN5">JLPT N5</option>
+        <option value="jlptN1">JLPT N1</option>
+    </select>
+
+    <div id="word"></div>
+    <input type="text" id="answer" placeholder="Type the word in Japanese" oninput="checkAnswer()">
+    <div id="feedback"></div>
+    <div id="score">Score: 0 / 0</div>
+
+    <div class="progress-bar">
+        <div id="progress-bar" class="progress-bar-inner"></div>
     </div>
-    <div id="word-container" class="word-container">Press Enter to Start!</div>
-    <div class="input-container">
-        <input type="text" id="input" placeholder="Type the word" autocomplete="off">
-    </div>
-    <div id="score">Score: 0</div>
-    <div id="progress-bar"><div id="progress-bar-filled"></div></div>
+</div>
 
-    <script>
-        let currentWord = "";
-        let score = 0;
-        let wordsList = [];
-        let wordIndex = 0;
+<script>
+// Word categories will be loaded from the respective JSON files
+let categories = {};
+let currentCategory = 'animals';
+let currentWordIndex = 0;
+let score = 0;
 
-        // Load the vocabulary based on the selected category
-        function loadVocabulary(category) {
-            fetch(`${category}.json`)
-                .then(response => response.json())
-                .then(data => {
-                    wordsList = data;
-                    wordIndex = 0;
-                    score = 0;
-                    document.getElementById("score").textContent = "Score: " + score;
-                    showNextWord();
-                });
-        }
-
-        // Display the next word
-        function showNextWord() {
-            if (wordIndex < wordsList.length) {
-                currentWord = wordsList[wordIndex].english;
-                document.getElementById("word-container").textContent = currentWord;
-                document.getElementById("input").value = "";
-                document.getElementById("input").focus();
-                updateProgressBar();
-            } else {
-                document.getElementById("word-container").textContent = "Congratulations! You've completed the list.";
-                document.getElementById("input").disabled = true;
-            }
-        }
-
-        // Update the progress bar
-        function updateProgressBar() {
-            const progress = (wordIndex / wordsList.length) * 100;
-            document.getElementById("progress-bar-filled").style.width = progress + "%";
-        }
-
-        // Check the user's input when they press Enter
-        document.getElementById("input").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                checkAnswer();
-            }
-        });
-
-        // Check if the typed word is correct
-        function checkAnswer() {
-            const input = document.getElementById("input").value.trim().toLowerCase();
-            const correctAnswers = wordsList[wordIndex].answers;
-
-            if (correctAnswers.some(answer => answer.toLowerCase() === input)) {
-                score++;
-                document.getElementById("score").textContent = "Score: " + score;
-            }
-
-            wordIndex++;
+// Load the word lists from the selected category's JSON file
+function loadVocabulary(category) {
+    fetch(`${category}.json`)
+        .then(response => response.json())
+        .then(data => {
+            categories[category] = data;
+            shuffleWords(categories[category]);
+            updateScore();
+            updateProgressBar();
             showNextWord();
+        })
+        .catch(error => {
+            console.error("Error loading the vocabulary file:", error);
+        });
+}
+
+// Handle category change
+function changeCategory() {
+    const selectedCategory = document.getElementById('category').value;
+    currentCategory = selectedCategory;
+    currentWordIndex = 0;  // Reset to first word in new category
+    score = 0;              // Reset score
+    loadVocabulary(currentCategory);  // Load the vocabulary for the selected category
+}
+
+// Show next word
+function showNextWord() {
+    const word = categories[currentCategory][currentWordIndex];
+    document.getElementById('word').textContent = word.english;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('answer').value = '';
+    document.getElementById('answer').focus();
+    const audio = new Audio(word.audio);
+    audio.play();
+    updateProgressBar();
+}
+
+// Shuffle words randomly
+function shuffleWords(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Check the typed answer
+function checkAnswer() {
+    const input = document.getElementById('answer').value.trim();
+    const word = categories[currentCategory][currentWordIndex];
+
+    if (word.answers.includes(input)) {
+        score++;
+        document.getElementById('feedback').textContent = '✅ Correct!';
+        currentWordIndex++;
+        updateScore();
+
+        if (currentWordIndex >= categories[currentCategory].length) {
+            document.getElementById('feedback').textContent = `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
+            currentWordIndex = 0;
+            score = 0;
+            setTimeout(() => {
+                shuffleWords(categories[currentCategory]);
+                updateScore();
+                showNextWord();
+            }, 3000);
+        } else {
+            setTimeout(showNextWord, 1000);
         }
-    </script>
+    } else {
+        document.getElementById('feedback').textContent = '❌ Try again!';
+    }
+}
+
+// Update the score display
+function updateScore() {
+    document.getElementById('score').textContent = `Score: ${score} / ${categories[currentCategory].length}`;
+}
+
+// Update the progress bar
+function updateProgressBar() {
+    const progress = (currentWordIndex / categories[currentCategory].length) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+}
+
+// Initially load the default category (animals)
+loadVocabulary(currentCategory);
+
+</script>
+
 </body>
 </html>
