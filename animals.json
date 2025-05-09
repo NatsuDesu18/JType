@@ -1,0 +1,5 @@
+[
+    { "english": "cat", "answers": ["ねこ", "猫"], "audio": "https://example.com/cat.mp3" },
+    { "english": "dog", "answers": ["いぬ", "犬"], "audio": "https://example.com/dog.mp3" },
+    { "english": "elephant", "answers": ["ぞう", "象"], "audio": "https://example.com/elephant.mp3" }
+]
