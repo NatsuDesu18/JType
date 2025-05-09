@@ -76,7 +76,7 @@
         <option value="animals">Animals</option>
         <option value="food">Food</option>
         <option value="jlptN5">JLPT N5</option>
-        <option value="jlptN1">JLPT N1</option>
+        <option value="jlptN1" selected>JLPT N1</option> <!-- Set JLPT N1 as default -->
     </select>
 
     <div id="word"></div>
@@ -92,7 +92,7 @@
 <script>
 // Word categories will be loaded from the JSON files
 let categories = {};
-let currentCategory = 'animals';
+let currentCategory = 'jlptN1'; // Set default category to 'jlptN1'
 let currentWordIndex = 0;
 let score = 0;
 
@@ -101,10 +101,6 @@ fetch('animals.json')
     .then(response => response.json())
     .then(data => {
         categories.animals = data;
-        shuffleWords(categories[currentCategory]);
-        updateScore();
-        updateProgressBar();
-        showNextWord();
     })
     .catch(error => {
         console.error("Error loading the animals vocabulary file:", error);
@@ -132,6 +128,10 @@ fetch('jlptN1.json')
     .then(response => response.json())
     .then(data => {
         categories.jlptN1 = data;
+        shuffleWords(categories[currentCategory]);
+        updateScore();
+        updateProgressBar();
+        showNextWord();
     })
     .catch(error => {
         console.error("Error loading the JLPT N1 vocabulary file:", error);
@@ -210,3 +210,4 @@ function updateProgressBar() {
 
 </body>
 </html>
+
