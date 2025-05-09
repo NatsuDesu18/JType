@@ -1,5 +1,0 @@
-[
-    { "english": "apple", "answers": ["りんご", "林檎"], "audio": "https://example.com/apple.mp3" },
-    { "english": "banana", "answers": ["バナナ", "banana"], "audio": "https://example.com/banana.mp3" },
-    { "english": "carrot", "answers": ["にんじん", "人参"], "audio": "https://example.com/carrot.mp3" }
-]
