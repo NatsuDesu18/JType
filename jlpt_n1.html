@@ -109,7 +109,7 @@
 </head>
 <body class="dark-mode">
   <div class="container">
-    <h1>Japanese Typing Practice - Animals</h1>
+    <h1>N1 Vocabulary</h1>
     <div id="word"></div>
     <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" />
     <div id="feedback"></div>
@@ -148,7 +148,7 @@
       if (e.key === 'Enter' && !isComposing) checkAnswer();
     });
 
-    async function loadAnimals() {
+    async function loadjlptN1answers() {
       const res = await fetch('jlptN1.json');
       words = await res.json();
 
@@ -192,7 +192,7 @@
         currentIndex++; // ✅ increment index here
         setTimeout(() => {
           saveProgress();
-          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
+          window.location.href = `jlptN1sanswers.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
         }, 500);
       } else {
         input.classList.add('submitted-incorrect');
@@ -205,7 +205,7 @@
       const word = words[currentIndex];
       currentIndex++; // ✅ increment index
       saveProgress();
-      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
+      window.location.href = `jlptN1answers.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
     }
 
     function showHint() {
@@ -253,7 +253,7 @@
 }
 
     // Initial load
-    loadAnimals();
+    loadjlptN1answers();
   </script>
 </body>
 </html>
