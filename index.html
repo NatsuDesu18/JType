@@ -20,7 +20,6 @@
       background-color: #1e1e1e;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
-      transition: background-color 0.3s;
     }
     h1 {
       text-align: center;
@@ -30,20 +29,8 @@
       font-size: 30px;
       text-align: center;
       margin: 20px 0;
-      opacity: 0;
-      animation: fadeIn 1s forwards;
     }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-    #feedback {
-      text-align: center;
-      font-size: 18px;
-      margin: 10px 0;
-    }
-    #score {
+    #feedback, #score {
       text-align: center;
       font-size: 18px;
     }
@@ -54,7 +41,6 @@
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
-      box-sizing: border-box;
       background-color: #2c2c2c;
       color: white;
     }
@@ -79,16 +65,6 @@
       width: 0;
       border-radius: 4px;
     }
-    select {
-      font-size: 16px;
-      padding: 10px;
-      margin: 10px 0;
-      width: 100%;
-      border-radius: 4px;
-      background-color: #2c2c2c;
-      color: white;
-      border: 1px solid #555;
-    }
     .button-container {
       text-align: center;
     }
@@ -102,10 +78,19 @@
       color: white;
       border: none;
       border-radius: 4px;
-      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #45a049;
+    }
+    select {
+      font-size: 16px;
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 4px;
+      background-color: #2c2c2c;
+      color: white;
+      border: 1px solid #555;
     }
     .dark-mode {
       background-color: #121212;
@@ -123,11 +108,9 @@
     }
   </style>
 </head>
-<body>
-
+<body class="dark-mode">
 <div class="container">
   <h1>Japanese Typing Practice</h1>
-
   <label for="category">Choose a category:</label>
   <select id="category" onchange="changeCategory()">
     <option value="animals">Animals</option>
@@ -137,7 +120,7 @@
   </select>
 
   <div id="word"></div>
-  <input type="text" id="answer" onkeydown="handleKey(event)" autocomplete="off" placeholder="Type your answer here" />
+  <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" />
   <div id="feedback"></div>
   <div id="score">Score: 0 / 0</div>
 
@@ -146,90 +129,52 @@
   </div>
 
   <div class="button-container">
-    <button id="hintButton" onclick="showHint()">Hint</button>
-    <button id="skipButton" onclick="skipWord()">Skip</button>
-    <button id="darkModeButton" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <button onclick="showHint()">Hint</button>
+    <button onclick="skipWord()">Skip</button>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
   </div>
 </div>
 
 <script>
-let categories = {};
-let currentCategory = 'jlptN1';
-let currentWordIndex = 0;
+let words = [];
+let currentIndex = 0;
 let score = 0;
-let isAnswerSubmitted = false;
 let isComposing = false;
 let isDarkMode = true;
-let isComposing = false;
-
-function handleKey(event) {
-  if (isComposing) return;
-  if (event.key === 'Enter') {
-    checkAnswer();
-  }
-}
-
-document.getElementById('answer').addEventListener('compositionstart', () => {
-  isComposing = true;
-});
-document.getElementById('answer').addEventListener('compositionend', () => {
-  isComposing = false;
-});
-
 const typingSound = new Audio('https://www.soundjay.com/mechanical/keyboard-1.mp3');
 typingSound.volume = 0.2;
 
-// Load JSON
-Promise.all([
-  fetch('animals.json').then(r => r.json()),
-  fetch('food.json').then(r => r.json()),
-  fetch('jlptN5.json').then(r => r.json()),
-  fetch('jlptN1.json').then(r => r.json())
-]).then(([animals, food, jlptN5, jlptN1]) => {
-  categories.animals = animals;
-  categories.food = food;
-  categories.jlptN5 = jlptN5;
-  categories.jlptN1 = jlptN1;
-  shuffleWords(categories[currentCategory]);
-  updateScore();
-  updateProgressBar();
-  showNextWord();
+const input = document.getElementById('answer');
+input.addEventListener('input', () => {
+  typingSound.currentTime = 0;
+  typingSound.play();
+});
+input.addEventListener('compositionstart', () => isComposing = true);
+input.addEventListener('compositionend', () => isComposing = false);
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !isComposing) checkAnswer();
 });
 
-function changeCategory() {
-  currentCategory = document.getElementById('category').value;
-  currentWordIndex = 0;
+async function changeCategory() {
+  const category = document.getElementById('category').value;
+  const res = await fetch(`${category}.json`);
+  words = await res.json();
+  shuffleWords(words);
+  currentIndex = 0;
   score = 0;
-  shuffleWords(categories[currentCategory]);
   updateScore();
-  showNextWord();
+  updateProgressBar();
+  showWord();
 }
 
-function showNextWord() {
-  const word = categories[currentCategory][currentWordIndex];
+function showWord() {
+  const word = words[currentIndex];
   document.getElementById('word').textContent = word.english;
-  document.getElementById('feedback').textContent = '';
-  const input = document.getElementById('answer');
   input.value = '';
-  input.disabled = false;
   input.classList.remove('submitted-correct', 'submitted-incorrect');
+  document.getElementById('feedback').textContent = '';
+  input.disabled = false;
   input.focus();
-  isAnswerSubmitted = false;
-
-  input.addEventListener('compositionstart', () => isComposing = true);
-  input.addEventListener('compositionend', () => isComposing = false);
-
-  input.addEventListener('input', () => {
-    typingSound.currentTime = 0;
-    typingSound.play();
-  });
-
-  if (word.audio) {
-    const audio = new Audio(word.audio);
-    audio.play();
-  }
-
-  updateProgressBar();
 }
 
 function shuffleWords(array) {
@@ -240,97 +185,49 @@ function shuffleWords(array) {
 }
 
 function checkAnswer() {
-  if (isAnswerSubmitted) return;
-
-  const answerInput = document.getElementById('answer');
-  const input = answerInput.value.trim();
-  const word = categories[currentCategory][currentWordIndex];
-
-  if (!input) return;
-
-  if (word.answers.includes(input)) {
+  const userInput = input.value.trim();
+  const currentWord = words[currentIndex];
+  if (currentWord.answers.includes(userInput)) {
+    input.classList.add('submitted-correct');
     score++;
-    isAnswerSubmitted = true;
-    answerInput.disabled = true;
-    answerInput.classList.add('submitted-correct');
-    updateScore();
-
-    // Redirect to answer.html and pass the Japanese word in the URL
-    const correctAnswer = word.japanese;
     setTimeout(() => {
-      window.location.href = `answer.html?answer=${encodeURIComponent(correctAnswer)}`;
+      window.location.href = `answer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
     }, 500);
   } else {
+    input.classList.add('submitted-incorrect');
     document.getElementById('feedback').textContent = '❌ Try again!';
-    answerInput.classList.add('submitted-incorrect');
-    setTimeout(() => {
-      answerInput.classList.remove('submitted-incorrect');
-    }, 500);
   }
+  updateScore();
 }
 
 function skipWord() {
-  const word = categories[currentCategory][currentWordIndex];
-  if (word && word.japanese) {
-    const correctAnswer = word.japanese;
-    // Redirect to the answer page with the correct answer passed as a URL parameter
-    window.location.href = `answer.html?answer=${encodeURIComponent(correctAnswer)}`;
-  } else {
-    document.getElementById('feedback').textContent = '❌ No answer available';
-  }
-
-  currentWordIndex++;
-  updateScore();
-
-  if (currentWordIndex >= categories[currentCategory].length) {
-    document.getElementById('feedback').textContent =
-      `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
-    currentWordIndex = 0;
-    score = 0;
-    setTimeout(() => {
-      shuffleWords(categories[currentCategory]);
-      updateScore();
-      showNextWord();
-    }, 3000);
-  } else {
-    setTimeout(showNextWord, 1000);
-  }
-}
-
-function updateScore() {
-  document.getElementById('score').textContent =
-    `Score: ${score} / ${categories[currentCategory].length}`;
-}
-
-function updateProgressBar() {
-  const progress = (currentWordIndex / categories[currentCategory].length) * 100;
-  document.getElementById('progress-bar').style.width = `${progress}%`;
+  const word = words[currentIndex];
+  window.location.href = `answer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
 }
 
 function showHint() {
-  const word = categories[currentCategory][currentWordIndex];
-  const hint = word.japanese ? word.japanese.charAt(0) : '?';  // Ensure japanese exists
+  const word = words[currentIndex];
+  const hint = word.japanese ? word.japanese.charAt(0) : '?';
   document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
 }
 
-function handleKey(event) {
-  if (event.key === 'Enter' && !isComposing) {
-    checkAnswer();
-  }
+function updateScore() {
+  document.getElementById('score').textContent = `Score: ${score} / ${words.length}`;
+}
+
+function updateProgressBar() {
+  const progress = (currentIndex / words.length) * 100;
+  document.getElementById('progress-bar').style.width = `${progress}%`;
 }
 
 function toggleDarkMode() {
   isDarkMode = !isDarkMode;
-  const body = document.body;
-  if (isDarkMode) {
-    body.classList.add('dark-mode');
-    body.classList.remove('light-mode');
-  } else {
-    body.classList.add('light-mode');
-    body.classList.remove('dark-mode');
-  }
+  document.body.classList.toggle('dark-mode', isDarkMode);
+  document.body.classList.toggle('light-mode', !isDarkMode);
 }
-</script>
 
+// Initial load
+changeCategory();
+</script>
 </body>
 </html>
