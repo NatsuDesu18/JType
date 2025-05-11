@@ -5,7 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Japanese Typing Practice - Animals</title>
   <style>
-    /* Your existing styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    #word {
+      font-size: 30px;
+      text-align: center;
+      margin: 20px 0;
+    }
+    #feedback, #score {
+      text-align: center;
+      font-size: 18px;
+    }
+    input[type="text"] {
+      font-size: 18px;
+      padding: 10px;
+      width: 100%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #2c2c2c;
+      color: white;
+    }
+    input.submitted-correct {
+      background-color: #2e7d32;
+      border: 2px solid #66bb6a;
+    }
+    input.submitted-incorrect {
+      background-color: #b71c1c;
+      border: 2px solid #ef5350;
+    }
+    .progress-bar {
+      width: 100%;
+      background-color: #333;
+      border-radius: 4px;
+      height: 20px;
+      margin: 10px 0;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background-color: #4caf50;
+      width: 0;
+      border-radius: 4px;
+    }
+    .button-container {
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+    .light-mode {
+      background-color: #ffffff;
+      color: black;
+    }
+    .dark-mode .container {
+      background-color: #1e1e1e;
+    }
+    .light-mode .container {
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body class="dark-mode">
@@ -50,16 +140,9 @@
     async function loadAnimals() {
       const res = await fetch('animals.json');
       words = await res.json();
-
-      // Check if there is saved progress in sessionStorage
-      const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
-      if (savedProgress) {
-        currentIndex = savedProgress.currentIndex || 0;
-        score = savedProgress.score || 0;
-      } else {
-        shuffleWords(words); // If no saved progress, shuffle the words
-      }
-
+      shuffleWords(words);
+      currentIndex = 0;
+      score = 0;
       updateScore();
       updateProgressBar();
       showWord();
@@ -89,8 +172,6 @@
         input.classList.add('submitted-correct');
         score++;
         setTimeout(() => {
-          // Save the current progress to sessionStorage before navigating to the answer page
-          saveProgress();
           window.location.href = `answer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
         }, 500);
       } else {
@@ -102,8 +183,6 @@
 
     function skipWord() {
       const word = words[currentIndex];
-      // Save the current progress to sessionStorage before navigating to the answer page
-      saveProgress();
       window.location.href = `answer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
     }
 
@@ -126,15 +205,6 @@
       isDarkMode = !isDarkMode;
       document.body.classList.toggle('dark-mode', isDarkMode);
       document.body.classList.toggle('light-mode', !isDarkMode);
-    }
-
-    // Save the current progress to sessionStorage
-    function saveProgress() {
-      const progress = {
-        currentIndex: currentIndex,
-        score: score
-      };
-      sessionStorage.setItem("quizProgress", JSON.stringify(progress));
     }
 
     // Initial load
