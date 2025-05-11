@@ -14,12 +14,18 @@
             height: 100vh;
             margin: 0;
             background-color: #f9f9f9;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        body.dark-mode {
+            background-color: #333;
+            color: #f9f9f9;
         }
         .container {
             text-align: center;
             margin-bottom: 20px;
         }
-        button {
+        .button {
             padding: 15px 30px;
             font-size: 18px;
             margin: 10px;
@@ -29,9 +35,11 @@
             border: none;
             border-radius: 5px;
             width: 200px;
+            text-decoration: none;
+            display: inline-block;
             transition: all 0.3s ease;
         }
-        button:hover {
+        .button:hover {
             background-color: #45a049;
             transform: scale(1.1);
         }
@@ -43,19 +51,44 @@
         .back-button:hover {
             background-color: #e64a19;
         }
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .dark-mode-toggle:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+
     <div class="container">
         <h1>Choose JLPT Level</h1>
-        <button onclick="window.location.href='jlpt_n1.html'">JLPT N1</button>
-        <button onclick="window.location.href='jlpt_n2.html'">JLPT N2</button>
-        <button onclick="window.location.href='jlpt_n3.html'">JLPT N3</button>
-        <button onclick="window.location.href='jlpt_n4.html'">JLPT N4</button>
-        <button onclick="window.location.href='jlpt_n5.html'">JLPT N5</button>
+        <a href="jlpt_n1.html" class="button">JLPT N1</a>
+        <a href="jlpt_n2.html" class="button">JLPT N2</a>
+        <a href="jlpt_n3.html" class="button">JLPT N3</a>
+        <a href="jlpt_n4.html" class="button">JLPT N4</a>
+        <a href="jlpt_n5.html" class="button">JLPT N5</a>
         
         <!-- Back to main portal button -->
-        <button class="back-button" onclick="window.location.href='index.html'">Back to Main Portal</button>
+        <a href="index.html" class="button back-button">Back to Main Portal</a>
     </div>
+
+    <script>
+        // Dark mode toggle functionality
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
 </body>
 </html>
