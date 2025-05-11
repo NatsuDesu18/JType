@@ -3,22 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Japanese Vocabulary Quiz</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+  <title>Japanese Typing Practice - Animals</title>
+  <style>
+    /* Reset some defaults */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
 
-  <div class="container">
-    <h1>Welcome to the Japanese Vocabulary Quiz</h1>
-    <p>Select a category to begin:</p>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      transition: background-color 0.3s ease-in-out;
+    }
 
-    <ul>
-      <li><a href="animals.html">Animals</a></li>
-      <li><a href="food.html">Food</a></li>
-      <li><a href="jlptN1.html">JLPT N1</a></li>
-      <li><a href="jlptN5.html">JLPT N5</a></li>
-    </ul>
-  </div>
+    .container {
+      width: 100%;
+      max-width: 800px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: fadeIn 0.5s ease-out;
+    }
 
-</body>
-</html>
+    h1 {
+      font-size: 32px;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    #word {
+      font-size: 36px;
+      font-weight: bold;
+      color: #444;
+      margin: 30px 0;
