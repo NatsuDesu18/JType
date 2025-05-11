@@ -175,7 +175,7 @@ function checkAnswer() {
 
     if (currentWordIndex >= categories[currentCategory].length) {
       document.getElementById('feedback').textContent =
-        `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
+        🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length};
       currentWordIndex = 0;
       score = 0;
       setTimeout(() => {
@@ -193,13 +193,13 @@ function checkAnswer() {
 
 function skipWord() {
   const word = categories[currentCategory][currentWordIndex];
-  document.getElementById('feedback').textContent = `❌ Incorrect! The correct answer is: ${word.japanese}`;
+  document.getElementById('feedback').textContent = ❌ Incorrect! The correct answer is: ${word.japanese};
   currentWordIndex++;
   updateScore();
 
   if (currentWordIndex >= categories[currentCategory].length) {
     document.getElementById('feedback').textContent =
-      `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
+      🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length};
     currentWordIndex = 0;
     score = 0;
     setTimeout(() => {
@@ -214,18 +214,18 @@ function skipWord() {
 
 function updateScore() {
   document.getElementById('score').textContent =
-    `Score: ${score} / ${categories[currentCategory].length}`;
+    Score: ${score} / ${categories[currentCategory].length};
 }
 
 function updateProgressBar() {
   const progress = (currentWordIndex / categories[currentCategory].length) * 100;
-  document.getElementById('progress-bar').style.width = `${progress}%`;
+  document.getElementById('progress-bar').style.width = ${progress}%;
 }
 
 function showHint() {
   const word = categories[currentCategory][currentWordIndex];
   const hint = word.japanese[0];
-  document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
+  document.getElementById('feedback').textContent = Hint: Starts with 「${hint}」;
 }
 </script>
 
