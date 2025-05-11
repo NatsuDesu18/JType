@@ -180,7 +180,7 @@
         input.classList.add('submitted-correct');
         score++;
         setTimeout(() => {
-          window.location.href = `answer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
+          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
         }, 500);
       } else {
         input.classList.add('submitted-incorrect');
@@ -191,7 +191,7 @@
 
     function skipWord() {
       const word = words[currentIndex];
-      window.location.href = `answer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
+      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
     }
 
     function showHint() {
