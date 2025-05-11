@@ -104,4 +104,41 @@
       const word = words[currentIndex];
       // Save the current progress to sessionStorage before navigating to the answer page
       saveProgress();
-      window.location.href = `animalsanswer.html?answer
+      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
+    }
+
+    function showHint() {
+      const word = words[currentIndex];
+      const hint = word.japanese ? word.japanese.charAt(0) : '?';
+      document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
+    }
+
+    function updateScore() {
+      document.getElementById('score').textContent = `Score: ${score} / ${words.length}`;
+    }
+
+    function updateProgressBar() {
+      const progress = (currentIndex / words.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+    }
+
+    function toggleDarkMode() {
+      isDarkMode = !isDarkMode;
+      document.body.classList.toggle('dark-mode', isDarkMode);
+      document.body.classList.toggle('light-mode', !isDarkMode);
+    }
+
+    // Save the current progress to sessionStorage
+    function saveProgress() {
+      const progress = {
+        currentIndex: currentIndex,
+        score: score
+      };
+      sessionStorage.setItem("quizProgress", JSON.stringify(progress));
+    }
+
+    // Initial load
+    loadAnimals();
+  </script>
+</body>
+</html>
