@@ -149,21 +149,21 @@
     }
 
     function showWord() {
-  if (currentIndex >= words.length) {
-    alert("You've completed all the questions!");
-    sessionStorage.removeItem("quizProgress"); // ✅ Clear saved progress
-    currentIndex = 0;
-    score = 0;
-    shuffleWords(words);
-  }
-  const word = words[currentIndex];
-  document.getElementById('word').textContent = word.english;
-  input.value = '';
-  input.classList.remove('submitted-correct', 'submitted-incorrect');
-  document.getElementById('feedback').textContent = '';
-  input.disabled = false;
-  input.focus();
-}
+      if (currentIndex >= words.length) {
+        alert("You've completed all the questions!");
+        sessionStorage.removeItem("quizProgress");
+        currentIndex = 0;
+        score = 0;
+        shuffleWords(words);
+      }
+      const word = words[currentIndex];
+      document.getElementById('word').textContent = word.english;
+      input.value = '';
+      input.classList.remove('submitted-correct', 'submitted-incorrect');
+      document.getElementById('feedback').textContent = '';
+      input.disabled = false;
+      input.focus();
+    }
 
     function shuffleWords(array) {
       for (let i = array.length - 1; i > 0; i--) {
@@ -173,33 +173,33 @@
     }
 
     function checkAnswer() {
-  const userInput = input.value.trim();
-  const currentWord = words[currentIndex];
-  if (currentWord.answers.includes(userInput)) {
-    input.classList.add('submitted-correct');
-    score++;
-    currentIndex++; // ✅ Move to the next word
-    setTimeout(() => {
-      saveProgress();
-      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
-    }, 500);
-  } else {
-    input.classList.add('submitted-incorrect');
-    document.getElementById('feedback').textContent = '❌ Try again!';
-  }
-  updateScore();
-}
+      const userInput = input.value.trim();
+      const currentWord = words[currentIndex];
+      if (currentWord.answers.includes(userInput)) {
+        input.classList.add('submitted-correct');
+        score++;
+        currentIndex++;
+        setTimeout(() => {
+          saveProgress();
+          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.answers[0])}&definition=${encodeURIComponent(currentWord.english)}`;
+        }, 500);
+      } else {
+        input.classList.add('submitted-incorrect');
+        document.getElementById('feedback').textContent = '❌ Try again!';
+      }
+      updateScore();
+    }
 
-   function skipWord() {
-  const word = words[currentIndex];
-  currentIndex++; // ✅ Move to the next word even when skipping
-  saveProgress();
-  window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
-}
+    function skipWord() {
+      const word = words[currentIndex];
+      currentIndex++;
+      saveProgress();
+      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.answers[0])}&definition=${encodeURIComponent(word.english)}`;
+    }
 
     function showHint() {
       const word = words[currentIndex];
-      const hint = word.japanese ? word.japanese.charAt(0) : '?';
+      const hint = word.answers[0] ? word.answers[0].charAt(0) : '?';
       document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
     }
 
@@ -216,6 +216,14 @@
       isDarkMode = !isDarkMode;
       document.body.classList.toggle('dark-mode', isDarkMode);
       document.body.classList.toggle('light-mode', !isDarkMode);
+    }
+
+    function saveProgress() {
+      const progress = {
+        currentIndex,
+        score
+      };
+      sessionStorage.setItem("quizProgress", JSON.stringify(progress));
     }
 
     // Initial load
