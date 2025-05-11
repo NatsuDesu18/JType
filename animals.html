@@ -195,10 +195,17 @@
     }
 
     function showHint() {
-      const word = words[currentIndex];
-      const hint = word.japanese ? word.japanese.charAt(0) : '?';
-      document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
-    }
+  const word = words[currentIndex];
+  
+  // Regular expression to find the first Hiragana character
+  const hiraganaRegex = /[ぁ-ん]/;
+
+  // Get the first hiragana character from the Japanese word
+  const hint = word.japanese.match(hiraganaRegex) ? word.japanese.match(hiraganaRegex)[0] : '?';
+
+  // Show the hint
+  document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
+}
 
     function updateScore() {
       document.getElementById('score').textContent = `Score: ${score} / ${words.length}`;
