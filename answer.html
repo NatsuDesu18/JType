@@ -55,12 +55,19 @@
   </div>
 
   <script>
-    const japanese = sessionStorage.getItem("lastAnswer");
-    const english = sessionStorage.getItem("lastDefinition");
+    // Retrieve the last word object from sessionStorage
+    const lastWord = JSON.parse(sessionStorage.getItem("lastWord"));
 
-    document.getElementById("japanese").textContent = japanese || "No answer found";
-    document.getElementById("english").textContent = english || "No definition found";
+    if (lastWord) {
+      // Display the Japanese word and the definition (or an alternative if not available)
+      document.getElementById("japanese").textContent = lastWord.japanese || "No answer found";
+      document.getElementById("english").textContent = lastWord.definition || "No definition found";
+    } else {
+      document.getElementById("japanese").textContent = "No word found";
+      document.getElementById("english").textContent = "No definition found";
+    }
 
+    // Go back to the quiz page when the button is clicked
     function goBack() {
       window.location.href = "index.html";
     }
