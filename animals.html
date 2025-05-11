@@ -91,7 +91,7 @@
         setTimeout(() => {
           // Save the current progress to sessionStorage before navigating to the answer page
           saveProgress();
-          window.location.href = animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)};
+          window.location.href = `answer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
         }, 500);
       } else {
         input.classList.add('submitted-incorrect');
@@ -104,22 +104,22 @@
       const word = words[currentIndex];
       // Save the current progress to sessionStorage before navigating to the answer page
       saveProgress();
-      window.location.href = animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)};
+      window.location.href = `answer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
     }
 
     function showHint() {
       const word = words[currentIndex];
       const hint = word.japanese ? word.japanese.charAt(0) : '?';
-      document.getElementById('feedback').textContent = Hint: Starts with 「${hint}」;
+      document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
     }
 
     function updateScore() {
-      document.getElementById('score').textContent = Score: ${score} / ${words.length};
+      document.getElementById('score').textContent = `Score: ${score} / ${words.length}`;
     }
 
     function updateProgressBar() {
       const progress = (currentIndex / words.length) * 100;
-      document.getElementById('progress-bar').style.width = ${progress}%;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
     }
 
     function toggleDarkMode() {
