@@ -227,16 +227,16 @@ function shuffleWords(array) {
 function checkAnswer() {
   if (isAnswerSubmitted) return;
 
-  const input = document.getElementById('answer');
-  const value = input.value.trim();
+  const answerInput = document.getElementById('answer');
+  const input = answerInput.value.trim();
   const word = categories[currentCategory][currentWordIndex];
 
-  if (value && word.answers.includes(value)) {
+  if (input && word.answers.includes(input)) {
     score++;
     document.getElementById('feedback').textContent = '✅ Correct!';
-    input.classList.add('submitted-correct');
-    input.disabled = true;
     isAnswerSubmitted = true;
+    answerInput.classList.add('submitted-correct');
+    answerInput.disabled = true;
     currentWordIndex++;
     updateScore();
 
@@ -246,23 +246,28 @@ function checkAnswer() {
       currentWordIndex = 0;
       score = 0;
       setTimeout(() => {
-        input.disabled = false;
+        answerInput.disabled = false;
+        answerInput.classList.remove('submitted-correct');
         shuffleWords(categories[currentCategory]);
         updateScore();
         showNextWord();
       }, 3000);
     } else {
+      // Redirect to answer page with the correct answer
       setTimeout(() => {
-        input.disabled = false;
-        showNextWord();
-      }, 1000);
+        const correctAnswer = word.japanese;  // Assuming word.japanese is the correct answer
+        window.location.href = `answer.html?answer=${encodeURIComponent(correctAnswer)}`;
+      }, 1000);  // Delay before redirect
     }
   } else {
     document.getElementById('feedback').textContent = '❌ Try again!';
-    input.classList.add('submitted-incorrect');
-    setTimeout(() => input.classList.remove('submitted-incorrect'), 500);
+    answerInput.classList.add('submitted-incorrect');
+    setTimeout(() => {
+      answerInput.classList.remove('submitted-incorrect');
+    }, 500);
   }
 }
+
 
 function skipWord() {
   const word = categories[currentCategory][currentWordIndex];
