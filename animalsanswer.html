@@ -69,6 +69,9 @@
         if (wordData) {
           document.getElementById("japanese").textContent = wordData.japanese || "No answer found";
           document.getElementById("english").textContent = wordData.english || "No definition found";
+
+          // Store the current word in sessionStorage for feedback or future reference
+          sessionStorage.setItem("lastAnswer", JSON.stringify(wordData));
         } else {
           document.getElementById("japanese").textContent = "Word not found";
           document.getElementById("english").textContent = "Definition not available";
@@ -85,6 +88,7 @@
 
     // Go back to the quiz page when the button is clicked
     function goBack() {
+      // Navigate back to the quiz page and keep the session progress intact
       window.location.href = "animals.html";
     }
   </script>
