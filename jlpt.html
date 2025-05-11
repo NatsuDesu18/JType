@@ -17,6 +17,7 @@
         }
         .container {
             text-align: center;
+            margin-bottom: 20px;
         }
         button {
             padding: 15px 30px;
@@ -28,6 +29,19 @@
             border: none;
             border-radius: 5px;
             width: 200px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        .back-button {
+            background-color: #ff5722;
+            margin-top: 20px;
+            width: 180px;
+        }
+        .back-button:hover {
+            background-color: #e64a19;
         }
     </style>
 </head>
@@ -35,10 +49,13 @@
     <div class="container">
         <h1>Choose JLPT Level</h1>
         <button onclick="window.location.href='jlpt_n1.html'">JLPT N1</button>
-        <button onclick="alert('You clicked JLPT N2')">JLPT N2</button>
-        <button onclick="alert('You clicked JLPT N3')">JLPT N3</button>
-        <button onclick="alert('You clicked JLPT N4')">JLPT N4</button>
-        <button onclick="alert('You clicked JLPT N5')">JLPT N5</button>
+        <button onclick="window.location.href='jlpt_n2.html'">JLPT N2</button>
+        <button onclick="window.location.href='jlpt_n3.html'">JLPT N3</button>
+        <button onclick="window.location.href='jlpt_n4.html'">JLPT N4</button>
+        <button onclick="window.location.href='jlpt_n5.html'">JLPT N5</button>
+        
+        <!-- Back to main portal button -->
+        <button class="back-button" onclick="window.location.href='index.html'">Back to Main Portal</button>
     </div>
 </body>
 </html>
