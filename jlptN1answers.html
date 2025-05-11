@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Answer Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background-color: #1e1e1e;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    .japanese {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .english {
+      font-size: 24px;
+      color: #aaa;
+    }
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="japanese" id="japanese">...</div>
+    <div class="english" id="english">...</div>
+    <button onclick="goBack()">Continue</button>
+  </div>
+
+  <script>
+    // Get the word passed in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const answer = urlParams.get("answer");
+
+    async function fetchjlptN1Data() {
+      try {
+        const response = await fetch("jlptN1.json");
+        const jlptN1 = await response.json();
+
+        const wordData = jlptN1.find(item => item.japanese === answer);
+
+        if (wordData) {
+          document.getElementById("japanese").textContent = wordData.japanese || "No answer found";
+          document.getElementById("english").textContent = wordData.english || "No definition found";
+
+          // Store the current word in sessionStorage for feedback or future reference
+          sessionStorage.setItem("lastAnswer", JSON.stringify(wordData));
+        } else {
+          document.getElementById("japanese").textContent = "Word not found";
+          document.getElementById("english").textContent = "Definition not available";
+        }
+      } catch (error) {
+        console.error("Error fetching jlptN1.json:", error);
+        document.getElementById("japanese").textContent = "Error";
+        document.getElementById("english").textContent = "Could not load data";
+      }
+    }
+
+    // Run the function to fetch data on page load
+    fetchjlptN1Data();
+
+    // Go back to the quiz page when the button is clicked
+    function goBack() {
+      // Navigate back to the quiz page and keep the session progress intact
+      window.location.href = "jlptN1.html";
+    }
+  </script>
+
+</body>
+</html>
