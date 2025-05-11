@@ -59,12 +59,13 @@
       height: 20px;
       margin: 10px 0;
     }
-    .progress-bar-inner {
-      height: 100%;
-      background-color: #4caf50;
-      width: 0;
-      border-radius: 4px;
-    }
+   .progress-bar-inner {
+  height: 100%;
+  background-color: #4caf50;
+  width: 0;
+  border-radius: 4px;
+  transition: width 0.5s ease-out;
+}
     .button-container {
       text-align: center;
     }
@@ -80,8 +81,16 @@
       border-radius: 4px;
     }
     button:hover {
-      background-color: #45a049;
-    }
+  background-color: #45a049;
+  transform: scale(1.05); /* Slightly grow button when hovered */
+  transition: transform 0.2s ease;
+}
+    button:focus {
+  outline: 2px solid #ff9800; /* Orange outline for accessibility */
+}
+    button:active {
+  transform: scale(0.98); /* Slightly shrink button when clicked */
+}
     .dark-mode {
       background-color: #121212;
       color: white;
@@ -230,9 +239,18 @@
     }
 
     // Back to Main Portal function
-    function goBackToMainPortal() {
-      window.location.href = 'index.html'; // Redirect to index.html (Main Portal)
-    }
+   function goBackToMainPortal() {
+  const button = document.querySelector('button');
+  button.textContent = "Returning to Main Portal..."; // Optional message change
+  button.disabled = true; // Disable button while redirecting
+  button.style.cursor = 'not-allowed';
+
+  // Add fade-out effect before redirecting
+  document.body.style.opacity = 0;
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 500); // Wait for opacity transition before redirect
+}
 
     // Initial load
     loadAnimals();
