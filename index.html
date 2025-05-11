@@ -267,7 +267,9 @@ function checkAnswer() {
 function skipWord() {
   const word = categories[currentCategory][currentWordIndex];
   if (word && word.japanese) {
-    document.getElementById('feedback').textContent = `❌ Incorrect! The correct answer is: ${word.japanese}`;
+    const correctAnswer = word.japanese;
+    // Redirect to the answer page with the correct answer passed as a URL parameter
+    window.location.href = `answer.html?answer=${encodeURIComponent(correctAnswer)}`;
   } else {
     document.getElementById('feedback').textContent = '❌ No answer available';
   }
