@@ -120,140 +120,150 @@
     </div>
 
     <div class="button-container">
-      <button onclick="showHint()">Hint</button>
-      <button onclick="skipWord()">Skip</button>
-      <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-      <!-- Back to Main Portal button -->
-      <button onclick="goBackToMainPortal()">Back to Main Portal</button>
-    </div>
-  </div>
+  <button onclick="showHint()">Hint</button>
+  <button onclick="skipWord()">Skip</button>
+  <button onclick="replayAudio()">Replay Audio</button> <!-- Add this line -->
+  <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <button onclick="goBackToMainPortal()">Back to Main Portal</button>
+</div>
 
   <script>
-    let words = [];
-    let currentIndex = 0;
-    let score = 0;
-    let isComposing = false;
-    let isDarkMode = true;
-    const typingSound = new Audio('https://www.soundjay.com/mechanical/keyboard-1.mp3');
-    typingSound.volume = 0.2;
+   let words = [];
+let currentIndex = 0;
+let score = 0;
+let isComposing = false;
+let isDarkMode = true;
+const typingSound = new Audio('https://www.soundjay.com/mechanical/keyboard-1.mp3');
+typingSound.volume = 0.2;
 
-    const input = document.getElementById('answer');
-    input.addEventListener('input', () => {
-      typingSound.currentTime = 0;
-      typingSound.play();
-    });
-    input.addEventListener('compositionstart', () => isComposing = true);
-    input.addEventListener('compositionend', () => isComposing = false);
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !isComposing) checkAnswer();
-    });
+const input = document.getElementById('answer');
+input.addEventListener('input', () => {
+  typingSound.currentTime = 0;
+  typingSound.play();
+});
+input.addEventListener('compositionstart', () => isComposing = true);
+input.addEventListener('compositionend', () => isComposing = false);
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !isComposing) checkAnswer();
+});
 
-    async function loadAnimals() {
-      const res = await fetch('animals.json');
-      words = await res.json();
+async function loadAnimals() {
+  const res = await fetch('animals.json');
+  words = await res.json();
 
-      // Check if there is saved progress in sessionStorage
-      const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
-      if (savedProgress) {
-        currentIndex = savedProgress.currentIndex || 0;
-        score = savedProgress.score || 0;
-      } else {
-        shuffleWords(words); // If no saved progress, shuffle the words
-      }
+  const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
+  if (savedProgress) {
+    currentIndex = savedProgress.currentIndex || 0;
+    score = savedProgress.score || 0;
+  } else {
+    shuffleWords(words);
+  }
 
-      updateScore();
-      updateProgressBar();
-      showWord();
-    }
+  updateScore();
+  updateProgressBar();
+  showWord();
+}
 
-    function showWord() {
-      const word = words[currentIndex];
-      document.getElementById('word').textContent = word.english;
-      input.value = '';
-      input.classList.remove('submitted-correct', 'submitted-incorrect');
-      document.getElementById('feedback').textContent = '';
-      input.disabled = false;
-      input.focus();
-    }
+function showWord() {
+  const word = words[currentIndex];
+  document.getElementById('word').textContent = word.english;
+  input.value = '';
+  input.classList.remove('submitted-correct', 'submitted-incorrect');
+  document.getElementById('feedback').textContent = '';
+  input.disabled = false;
+  input.focus();
 
-    function shuffleWords(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
+  playAudio(word.japanese); // Play vocab audio
+}
 
-    function checkAnswer() {
-      const userInput = input.value.trim();
-      const currentWord = words[currentIndex];
-      if (currentWord.answers.includes(userInput)) {
-        input.classList.add('submitted-correct');
-        score++;
-        currentIndex++; // ✅ increment index here
-        setTimeout(() => {
-          saveProgress();
-          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
-        }, 500);
-      } else {
-        input.classList.add('submitted-incorrect');
-        document.getElementById('feedback').textContent = '❌ Try again!';
-      }
-      updateScore();
-    }
+function playAudio(japaneseWord) {
+  const audio = document.getElementById('vocab-audio');
+  audio.src = `audio/${japaneseWord}.mp3`;
+  audio.play().catch(err => {
+    console.warn(`Could not play audio for: ${japaneseWord}`, err);
+  });
+}
 
-    function skipWord() {
-      const word = words[currentIndex];
-      currentIndex++; // ✅ increment index
+function replayAudio() {
+  const word = words[currentIndex];
+  playAudio(word.japanese);
+}
+
+function shuffleWords(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function checkAnswer() {
+  const userInput = input.value.trim();
+  const currentWord = words[currentIndex];
+  if (currentWord.answers.includes(userInput)) {
+    input.classList.add('submitted-correct');
+    score++;
+    currentIndex++;
+    setTimeout(() => {
       saveProgress();
-      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
-    }
+      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
+    }, 500);
+  } else {
+    input.classList.add('submitted-incorrect');
+    document.getElementById('feedback').textContent = '❌ Try again!';
+  }
+  updateScore();
+}
 
-    function showHint() {
-      const word = words[currentIndex];
-      const hint = word.japanese ? word.japanese.charAt(0) : '?';
-      document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
-    }
+function skipWord() {
+  const word = words[currentIndex];
+  currentIndex++;
+  saveProgress();
+  window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
+}
 
-    function updateScore() {
-      document.getElementById('score').textContent = `Score: ${score} / ${words.length}`;
-    }
+function showHint() {
+  const word = words[currentIndex];
+  const hint = word.japanese ? word.japanese.charAt(0) : '?';
+  document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
+}
 
-    function updateProgressBar() {
-      const progress = (currentIndex / words.length) * 100;
-      document.getElementById('progress-bar').style.width = `${progress}%`;
-    }
+function updateScore() {
+  document.getElementById('score').textContent = `Score: ${score} / ${words.length}`;
+}
 
-    function toggleDarkMode() {
-      isDarkMode = !isDarkMode;
-      document.body.classList.toggle('dark-mode', isDarkMode);
-      document.body.classList.toggle('light-mode', !isDarkMode);
-    }
+function updateProgressBar() {
+  const progress = (currentIndex / words.length) * 100;
+  document.getElementById('progress-bar').style.width = `${progress}%`;
+}
 
-    // Save the current progress to sessionStorage
-    function saveProgress() {
-      const progress = {
-        currentIndex: currentIndex,
-        score: score
-      };
-      sessionStorage.setItem("quizProgress", JSON.stringify(progress));
-    }
+function toggleDarkMode() {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle('dark-mode', isDarkMode);
+  document.body.classList.toggle('light-mode', !isDarkMode);
+}
 
-    // Back to Main Portal function
-   function goBackToMainPortal() {
+function saveProgress() {
+  const progress = {
+    currentIndex: currentIndex,
+    score: score
+  };
+  sessionStorage.setItem("quizProgress", JSON.stringify(progress));
+}
+
+function goBackToMainPortal() {
   const button = document.querySelector('button');
-  button.textContent = "Returning to Main Portal..."; // Optional message change
-  button.disabled = true; // Disable button while redirecting
+  button.textContent = "Returning to Main Portal...";
+  button.disabled = true;
   button.style.cursor = 'not-allowed';
-
-  // Add fade-out effect before redirecting
   document.body.style.opacity = 0;
   setTimeout(() => {
     window.location.href = 'index.html';
-  }, 500); // Wait for opacity transition before redirect
+  }, 500);
 }
 
-    // Initial load
-    loadAnimals();
+// Initial load
+loadAnimals();
   </script>
+<audio id="vocab-audio" src="" preload="auto"></audio>
 </body>
 </html>
