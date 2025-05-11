@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Japanese N1 vocabs</title>
+  <title>JLPT N1 Typing Practice</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,7 +11,7 @@
       color: white;
       margin: 0;
       padding: 20px;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s, opacity 0.5s ease;
     }
     .container {
       max-width: 600px;
@@ -64,6 +64,7 @@
       background-color: #4caf50;
       width: 0;
       border-radius: 4px;
+      transition: width 0.5s ease-out;
     }
     .button-container {
       text-align: center;
@@ -81,6 +82,14 @@
     }
     button:hover {
       background-color: #45a049;
+      transform: scale(1.05);
+      transition: transform 0.2s ease;
+    }
+    button:focus {
+      outline: 2px solid #ff9800;
+    }
+    button:active {
+      transform: scale(0.98);
     }
     .dark-mode {
       background-color: #121212;
@@ -100,7 +109,7 @@
 </head>
 <body class="dark-mode">
   <div class="container">
-    <h1>Japanese N1 vocabs</h1>
+    <h1>JLPT N1 Typing Practice</h1>
     <div id="word"></div>
     <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" />
     <div id="feedback"></div>
@@ -114,6 +123,7 @@
       <button onclick="showHint()">Hint</button>
       <button onclick="skipWord()">Skip</button>
       <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+      <button onclick="goBackToMainPortal()">Back to Main Portal</button>
     </div>
   </div>
 
@@ -137,17 +147,16 @@
       if (e.key === 'Enter' && !isComposing) checkAnswer();
     });
 
-    async function loadJlptN1() {
-      const res = await fetch('jlptN1.json');
+    async function loadWords() {
+      const res = await fetch('jlptn1.json');
       words = await res.json();
 
-      // Check if there is saved progress in sessionStorage
-      const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
+      const savedProgress = JSON.parse(sessionStorage.getItem("jlptN1Progress"));
       if (savedProgress) {
         currentIndex = savedProgress.currentIndex || 0;
         score = savedProgress.score || 0;
       } else {
-        shuffleWords(words); // If no saved progress, shuffle the words
+        shuffleWords(words);
       }
 
       updateScore();
@@ -172,30 +181,30 @@
       }
     }
 
-function checkAnswer() {
-  const userInput = input.value.trim();
-  const currentWord = words[currentIndex];
-  if (currentWord.answers.includes(userInput)) {
-    input.classList.add('submitted-correct');
-    score++;
-    currentIndex++; // ✅ increment index here
-    setTimeout(() => {
-      saveProgress();
-      window.location.href = `jlptN1sanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
-    }, 500);
-  } else {
-    input.classList.add('submitted-incorrect');
-    document.getElementById('feedback').textContent = '❌ Try again!';
-  }
-  updateScore();
-}
+    function checkAnswer() {
+      const userInput = input.value.trim();
+      const currentWord = words[currentIndex];
+      if (currentWord.answers.includes(userInput)) {
+        input.classList.add('submitted-correct');
+        score++;
+        currentIndex++;
+        setTimeout(() => {
+          saveProgress();
+          window.location.href = `jlptn1answer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
+        }, 500);
+      } else {
+        input.classList.add('submitted-incorrect');
+        document.getElementById('feedback').textContent = '❌ Try again!';
+      }
+      updateScore();
+    }
 
-function skipWord() {
-  const word = words[currentIndex];
-  currentIndex++; // ✅ increment index
-  saveProgress();
-  window.location.href = `jlptN1sanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
-}
+    function skipWord() {
+      const word = words[currentIndex];
+      currentIndex++;
+      saveProgress();
+      window.location.href = `jlptn1answer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
+    }
 
     function showHint() {
       const word = words[currentIndex];
@@ -218,17 +227,26 @@ function skipWord() {
       document.body.classList.toggle('light-mode', !isDarkMode);
     }
 
-    // Save the current progress to sessionStorage
+    function goBackToMainPortal() {
+      const button = document.querySelector('button');
+      button.textContent = "Returning to Main Portal...";
+      button.disabled = true;
+      button.style.cursor = 'not-allowed';
+      document.body.style.opacity = 0;
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    }
+
     function saveProgress() {
       const progress = {
         currentIndex: currentIndex,
         score: score
       };
-      sessionStorage.setItem("quizProgress", JSON.stringify(progress));
+      sessionStorage.setItem("jlptN1Progress", JSON.stringify(progress));
     }
 
-    // Initial load
-    loadJlptN1();
+    loadWords();
   </script>
 </body>
 </html>
