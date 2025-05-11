@@ -59,12 +59,12 @@
     const urlParams = new URLSearchParams(window.location.search);
     const answer = urlParams.get("answer");
 
-    async function fetchjlptN1Data() {
+    async function fetchAnimalsData() {
       try {
         const response = await fetch("jlptN1.json");
-        const jlptN1 = await response.json();
+        const animals = await response.json();
 
-        const wordData = jlptN1.find(item => item.japanese === answer);
+        const wordData = animals.find(item => item.japanese === answer);
 
         if (wordData) {
           document.getElementById("japanese").textContent = wordData.japanese || "No answer found";
