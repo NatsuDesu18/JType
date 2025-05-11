@@ -3,35 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Answer</title>
+  <title>Answer Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #1e1e1e;
-      color: white;
-      text-align: center;
-      padding: 50px;
+      background-color: #121212;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
-    h1 {
-      font-size: 2rem;
+    .card {
+      background-color: #1e1e1e;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    .japanese {
+      font-size: 48px;
       margin-bottom: 20px;
     }
-    .answer {
-      font-size: 1.5rem;
-      font-weight: bold;
+    .english {
+      font-size: 24px;
+      color: #aaa;
+    }
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
-  <h1>Answer to the Skipped Word</h1>
-  <div class="answer" id="answer"></div>
-  <button onclick="window.history.back()">Go Back</button>
+
+  <div class="card">
+    <div class="japanese" id="japanese">...</div>
+    <div class="english" id="english">...</div>
+    <button onclick="goBack()">Continue</button>
+  </div>
 
   <script>
-    // Get the word's correct answer from the URL parameter and display it
-    const urlParams = new URLSearchParams(window.location.search);
-    const answer = urlParams.get('answer');
-    document.getElementById('answer').textContent = answer ? answer : 'No answer available';
+    const japanese = sessionStorage.getItem("lastAnswer");
+    const english = sessionStorage.getItem("lastDefinition");
+
+    document.getElementById("japanese").textContent = japanese || "No answer found";
+    document.getElementById("english").textContent = english || "No definition found";
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
   </script>
+
 </body>
 </html>
