@@ -148,7 +148,7 @@
     });
 
     async function loadWords() {
-      const res = await fetch('jlptn1.json');
+      const res = await fetch('jlptN1.json');
       words = await res.json();
 
       const savedProgress = JSON.parse(sessionStorage.getItem("jlptN1Progress"));
