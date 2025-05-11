@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Japanese Typing Practice - Animals</title>
+  <style>
+    /* Your existing styles */
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="container">
+    <h1>Japanese Typing Practice - Animals</h1>
+    <div id="word"></div>
+    <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" />
+    <div id="feedback"></div>
+    <div id="score">Score: 0 / 0</div>
+
+    <div class="progress-bar">
+      <div id="progress-bar" class="progress-bar-inner"></div>
+    </div>
+
+    <div class="button-container">
+      <button onclick="showHint()">Hint</button>
+      <button onclick="skipWord()">Skip</button>
+      <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+  </div>
+
+  <script>
+    let words = [];
+    let currentIndex = 0;
+    let score = 0;
+    let isComposing = false;
+    let isDarkMode = true;
+    const typingSound = new Audio('https://www.soundjay.com/mechanical/keyboard-1.mp3');
+    typingSound.volume = 0.2;
+
+    const input = document.getElementById('answer');
+    input.addEventListener('input', () => {
+      typingSound.currentTime = 0;
+      typingSound.play();
+    });
+    input.addEventListener('compositionstart', () => isComposing = true);
+    input.addEventListener('compositionend', () => isComposing = false);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !isComposing) checkAnswer();
+    });
+
+    async function loadAnimals() {
+      const res = await fetch('animals.json');
+      words = await res.json();
+
+      // Check if there is saved progress in sessionStorage
+      const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
+      if (savedProgress) {
+        currentIndex = savedProgress.currentIndex || 0;
+        score = savedProgress.score || 0;
+      } else {
+        shuffleWords(words); // If no saved progress, shuffle the words
+      }
+
+      updateScore();
+      updateProgressBar();
+      showWord();
+    }
+
+    function showWord() {
+      const word = words[currentIndex];
+      document.getElementById('word').textContent = word.english;
+      input.value = '';
+      input.classList.remove('submitted-correct', 'submitted-incorrect');
+      document.getElementById('feedback').textContent = '';
+      input.disabled = false;
+      input.focus();
+    }
+
+    function shuffleWords(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function checkAnswer() {
+      const userInput = input.value.trim();
+      const currentWord = words[currentIndex];
+      if (currentWord.answers.includes(userInput)) {
+        input.classList.add('submitted-correct');
+        score++;
+        setTimeout(() => {
+          // Save the current progress to sessionStorage before navigating to the answer page
+          saveProgress();
+          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
+        }, 500);
+      } else {
+        input.classList.add('submitted-incorrect');
+        document.getElementById('feedback').textContent = '❌ Try again!';
+      }
+      updateScore();
+    }
+
+    function skipWord() {
+      const word = words[currentIndex];
+      // Save the current progress to sessionStorage before navigating to the answer page
+      saveProgress();
+      window.location.href = `animalsanswer.html?answer
