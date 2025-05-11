@@ -43,6 +43,17 @@
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input.submitted-correct {
+      background-color: #e8f5e9;
+      border: 2px solid #4caf50;
+      color: #2e7d32;
+    }
+    input.submitted-incorrect {
+      background-color: #ffebee;
+      border: 2px solid #f44336;
+      color: #b71c1c;
     }
     .progress-bar {
       width: 100%;
@@ -145,9 +156,14 @@ function showNextWord() {
   const word = categories[currentCategory][currentWordIndex];
   document.getElementById('word').textContent = word.english;
   document.getElementById('feedback').textContent = '';
-  document.getElementById('answer').value = '';
-  document.getElementById('answer').focus();
+  const input = document.getElementById('answer');
+  input.value = '';
+  input.disabled = false;
+  input.classList.remove('submitted-correct');
+  input.classList.remove('submitted-incorrect');
+  input.focus();
   isAnswerSubmitted = false;
+
   const audio = new Audio(word.audio);
   audio.play();
   updateProgressBar();
@@ -163,43 +179,56 @@ function shuffleWords(array) {
 function checkAnswer() {
   if (isAnswerSubmitted) return;
 
-  const input = document.getElementById('answer').value.trim();
+  const answerInput = document.getElementById('answer');
+  const input = answerInput.value.trim();
   const word = categories[currentCategory][currentWordIndex];
 
   if (input && word.answers.includes(input)) {
     score++;
     document.getElementById('feedback').textContent = '✅ Correct!';
     isAnswerSubmitted = true;
+    answerInput.classList.add('submitted-correct');
+    answerInput.disabled = true;
     currentWordIndex++;
     updateScore();
 
     if (currentWordIndex >= categories[currentCategory].length) {
       document.getElementById('feedback').textContent =
-        🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length};
+        `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
       currentWordIndex = 0;
       score = 0;
       setTimeout(() => {
+        answerInput.disabled = false;
+        answerInput.classList.remove('submitted-correct');
         shuffleWords(categories[currentCategory]);
         updateScore();
         showNextWord();
       }, 3000);
     } else {
-      setTimeout(showNextWord, 1000);
+      setTimeout(() => {
+        answerInput.disabled = false;
+        answerInput.classList.remove('submitted-correct');
+        showNextWord();
+      }, 1000);
     }
   } else {
     document.getElementById('feedback').textContent = '❌ Try again!';
+    answerInput.classList.add('submitted-incorrect');
+    setTimeout(() => {
+      answerInput.classList.remove('submitted-incorrect');
+    }, 500);
   }
 }
 
 function skipWord() {
   const word = categories[currentCategory][currentWordIndex];
-  document.getElementById('feedback').textContent = ❌ Incorrect! The correct answer is: ${word.japanese};
+  document.getElementById('feedback').textContent = `❌ Incorrect! The correct answer is: ${word.japanese}`;
   currentWordIndex++;
   updateScore();
 
   if (currentWordIndex >= categories[currentCategory].length) {
     document.getElementById('feedback').textContent =
-      🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length};
+      `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
     currentWordIndex = 0;
     score = 0;
     setTimeout(() => {
@@ -214,18 +243,18 @@ function skipWord() {
 
 function updateScore() {
   document.getElementById('score').textContent =
-    Score: ${score} / ${categories[currentCategory].length};
+    `Score: ${score} / ${categories[currentCategory].length}`;
 }
 
 function updateProgressBar() {
   const progress = (currentWordIndex / categories[currentCategory].length) * 100;
-  document.getElementById('progress-bar').style.width = ${progress}%;
+  document.getElementById('progress-bar').style.width = `${progress}%`;
 }
 
 function showHint() {
   const word = categories[currentCategory][currentWordIndex];
   const hint = word.japanese[0];
-  document.getElementById('feedback').textContent = Hint: Starts with 「${hint}」;
+  document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
 }
 </script>
 
