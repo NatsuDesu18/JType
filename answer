@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Answer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .answer {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Answer to the Skipped Word</h1>
+  <div class="answer" id="answer"></div>
+  <button onclick="window.history.back()">Go Back</button>
+
+  <script>
+    // Get the word's correct answer from the URL parameter and display it
+    const urlParams = new URLSearchParams(window.location.search);
+    const answer = urlParams.get('answer');
+    document.getElementById('answer').textContent = answer ? answer : 'No answer available';
+  </script>
+</body>
+</html>
