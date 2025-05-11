@@ -114,6 +114,8 @@
       <button onclick="showHint()">Hint</button>
       <button onclick="skipWord()">Skip</button>
       <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+      <!-- Back to Main Portal button -->
+      <button onclick="goBackToMainPortal()">Back to Main Portal</button>
     </div>
   </div>
 
@@ -172,30 +174,30 @@
       }
     }
 
-function checkAnswer() {
-  const userInput = input.value.trim();
-  const currentWord = words[currentIndex];
-  if (currentWord.answers.includes(userInput)) {
-    input.classList.add('submitted-correct');
-    score++;
-    currentIndex++; // ✅ increment index here
-    setTimeout(() => {
-      saveProgress();
-      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
-    }, 500);
-  } else {
-    input.classList.add('submitted-incorrect');
-    document.getElementById('feedback').textContent = '❌ Try again!';
-  }
-  updateScore();
-}
+    function checkAnswer() {
+      const userInput = input.value.trim();
+      const currentWord = words[currentIndex];
+      if (currentWord.answers.includes(userInput)) {
+        input.classList.add('submitted-correct');
+        score++;
+        currentIndex++; // ✅ increment index here
+        setTimeout(() => {
+          saveProgress();
+          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
+        }, 500);
+      } else {
+        input.classList.add('submitted-incorrect');
+        document.getElementById('feedback').textContent = '❌ Try again!';
+      }
+      updateScore();
+    }
 
-function skipWord() {
-  const word = words[currentIndex];
-  currentIndex++; // ✅ increment index
-  saveProgress();
-  window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
-}
+    function skipWord() {
+      const word = words[currentIndex];
+      currentIndex++; // ✅ increment index
+      saveProgress();
+      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
+    }
 
     function showHint() {
       const word = words[currentIndex];
@@ -225,6 +227,11 @@ function skipWord() {
         score: score
       };
       sessionStorage.setItem("quizProgress", JSON.stringify(progress));
+    }
+
+    // Back to Main Portal function
+    function goBackToMainPortal() {
+      window.location.href = 'index.html'; // Redirect to index.html (Main Portal)
     }
 
     // Initial load
