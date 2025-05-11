@@ -1,179 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JLPT N1 Typing Practice</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JLPT N1 Vocabulary Quiz</title>
   <style>
+    /* Basic styling for the app */
     body {
       font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: white;
       margin: 0;
-      padding: 20px;
-      transition: background-color 0.3s, color 0.3s, opacity 0.5s ease;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
     }
     .container {
-      max-width: 600px;
-      margin: 0 auto;
+      text-align: center;
       padding: 20px;
-      background-color: #1e1e1e;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    h1 {
-      text-align: center;
-      color: #4caf50;
+    .word {
+      font-size: 2em;
+      margin-bottom: 20px;
     }
-    #word {
-      font-size: 30px;
-      text-align: center;
-      margin: 20px 0;
-    }
-    #feedback, #score {
-      text-align: center;
-      font-size: 18px;
-    }
-    input[type="text"] {
-      font-size: 18px;
-      padding: 10px;
-      width: 100%;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color: #2c2c2c;
+    .answer-button {
+      background-color: #4CAF50;
       color: white;
+      font-size: 1.2em;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
     }
-    input.submitted-correct {
-      background-color: #2e7d32;
-      border: 2px solid #66bb6a;
+    .answer-button:hover {
+      background-color: #45a049;
     }
-    input.submitted-incorrect {
-      background-color: #b71c1c;
-      border: 2px solid #ef5350;
+    .audio-btn {
+      background-color: #008CBA;
+      color: white;
+      font-size: 1em;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .audio-btn:hover {
+      background-color: #007bb5;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 10px;
+      background-color: #ddd;
+      margin-top: 20px;
     }
     .progress-bar {
-      width: 100%;
-      background-color: #333;
-      border-radius: 4px;
-      height: 20px;
-      margin: 10px 0;
-    }
-    .progress-bar-inner {
       height: 100%;
-      background-color: #4caf50;
       width: 0;
-      border-radius: 4px;
-      transition: width 0.5s ease-out;
+      background-color: #4CAF50;
     }
-    .button-container {
-      text-align: center;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 10px;
-      margin-right: 10px;
-      cursor: pointer;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-    }
-    button:hover {
-      background-color: #45a049;
-      transform: scale(1.05);
-      transition: transform 0.2s ease;
-    }
-    button:focus {
-      outline: 2px solid #ff9800;
-    }
-    button:active {
-      transform: scale(0.98);
-    }
-    .dark-mode {
-      background-color: #121212;
-      color: white;
-    }
-    .light-mode {
-      background-color: #ffffff;
-      color: black;
-    }
-    .dark-mode .container {
-      background-color: #1e1e1e;
-    }
-    .light-mode .container {
-      background-color: #f0f0f0;
+    .score {
+      font-size: 1.2em;
+      margin-top: 20px;
     }
   </style>
 </head>
-<body class="dark-mode">
+<body>
+
   <div class="container">
-    <h1>JLPT N1 Typing Practice</h1>
-    <div id="word"></div>
-    <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" />
-    <div id="feedback"></div>
-    <div id="score">Score: 0 / 0</div>
-
-    <div class="progress-bar">
-      <div id="progress-bar" class="progress-bar-inner"></div>
+    <h1>JLPT N1 Vocabulary Quiz</h1>
+    <div id="word" class="word">Loading...</div>
+    <div id="answers"></div>
+    <button id="audioBtn" class="audio-btn" style="display:none;">Play Audio</button>
+    <div class="progress-bar-container">
+      <div id="progressBar" class="progress-bar"></div>
     </div>
-
-    <div class="button-container">
-      <button onclick="showHint()">Hint</button>
-      <button onclick="skipWord()">Skip</button>
-      <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-      <button onclick="goBackToMainPortal()">Back to Main Portal</button>
-    </div>
+    <div id="score" class="score">Score: 0</div>
   </div>
 
   <script>
     let words = [];
     let currentIndex = 0;
     let score = 0;
-    let isComposing = false;
-    let isDarkMode = true;
-    const typingSound = new Audio('https://www.soundjay.com/mechanical/keyboard-1.mp3');
-    typingSound.volume = 0.2;
 
-    const input = document.getElementById('answer');
-    input.addEventListener('input', () => {
-      typingSound.currentTime = 0;
-      typingSound.play();
-    });
-    input.addEventListener('compositionstart', () => isComposing = true);
-    input.addEventListener('compositionend', () => isComposing = false);
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !isComposing) checkAnswer();
-    });
-
+    // Load the words from the JSON file
     async function loadWords() {
-      const res = await fetch('jlptN1.json');
-      words = await res.json();
+      try {
+        const res = await fetch('jlptn1.json');
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        words = await res.json();
 
-      const savedProgress = JSON.parse(sessionStorage.getItem("jlptN1Progress"));
-      if (savedProgress) {
-        currentIndex = savedProgress.currentIndex || 0;
-        score = savedProgress.score || 0;
-      } else {
-        shuffleWords(words);
+        // Check for saved progress in sessionStorage
+        const savedProgress = JSON.parse(sessionStorage.getItem("jlptN1Progress"));
+        if (savedProgress) {
+          currentIndex = savedProgress.currentIndex || 0;
+          score = savedProgress.score || 0;
+        } else {
+          shuffleWords(words);
+        }
+
+        updateScore();
+        updateProgressBar();
+        showWord();
+      } catch (error) {
+        console.error('There was a problem loading the JSON file:', error);
+        alert('Error loading the words. Please check your JSON file or server configuration.');
       }
-
-      updateScore();
-      updateProgressBar();
-      showWord();
     }
 
-    function showWord() {
-      const word = words[currentIndex];
-      document.getElementById('word').textContent = word.english;
-      input.value = '';
-      input.classList.remove('submitted-correct', 'submitted-incorrect');
-      document.getElementById('feedback').textContent = '';
-      input.disabled = false;
-      input.focus();
-    }
-
+    // Shuffle words for random selection
     function shuffleWords(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -181,72 +123,70 @@
       }
     }
 
-    function checkAnswer() {
-      const userInput = input.value.trim();
+    // Show the current word and its answers
+    function showWord() {
       const currentWord = words[currentIndex];
-      if (currentWord.answers.includes(userInput)) {
-        input.classList.add('submitted-correct');
+      const wordElement = document.getElementById('word');
+      const answersElement = document.getElementById('answers');
+      const audioBtn = document.getElementById('audioBtn');
+
+      // Display word
+      wordElement.textContent = currentWord.english;
+
+      // Display answers
+      answersElement.innerHTML = '';
+      currentWord.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.textContent = answer;
+        button.className = 'answer-button';
+        button.onclick = () => checkAnswer(answer);
+        answersElement.appendChild(button);
+      });
+
+      // Play audio button
+      audioBtn.style.display = 'inline-block';
+      audioBtn.onclick = () => new Audio(currentWord.audio).play();
+    }
+
+    // Check if the selected answer is correct
+    function checkAnswer(answer) {
+      const currentWord = words[currentIndex];
+      if (currentWord.answers.includes(answer)) {
         score++;
-        currentIndex++;
-        setTimeout(() => {
-          saveProgress();
-          window.location.href = `jlptn1answer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
-        }, 500);
       } else {
-        input.classList.add('submitted-incorrect');
-        document.getElementById('feedback').textContent = '❌ Try again!';
+        score = Math.max(0, score - 1); // Ensure score doesn't go negative
       }
-      updateScore();
-    }
 
-    function skipWord() {
-      const word = words[currentIndex];
       currentIndex++;
-      saveProgress();
-      window.location.href = `jlptn1answer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
+      if (currentIndex >= words.length) {
+        alert(`Quiz finished! Your final score is ${score}`);
+        currentIndex = 0; // Reset the quiz
+      }
+
+      updateScore();
+      updateProgressBar();
+      showWord();
     }
 
-    function showHint() {
-      const word = words[currentIndex];
-      const hint = word.japanese ? word.japanese.charAt(0) : '?';
-      document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
-    }
-
+    // Update the score displayed
     function updateScore() {
-      document.getElementById('score').textContent = `Score: ${score} / ${words.length}`;
+      const scoreElement = document.getElementById('score');
+      scoreElement.textContent = `Score: ${score}`;
     }
 
+    // Update the progress bar
     function updateProgressBar() {
+      const progressBar = document.getElementById('progressBar');
       const progress = (currentIndex / words.length) * 100;
-      document.getElementById('progress-bar').style.width = `${progress}%`;
+      progressBar.style.width = `${progress}%`;
+
+      // Save progress in sessionStorage
+      sessionStorage.setItem("jlptN1Progress", JSON.stringify({ currentIndex, score }));
     }
 
-    function toggleDarkMode() {
-      isDarkMode = !isDarkMode;
-      document.body.classList.toggle('dark-mode', isDarkMode);
-      document.body.classList.toggle('light-mode', !isDarkMode);
-    }
-
-    function goBackToMainPortal() {
-      const button = document.querySelector('button');
-      button.textContent = "Returning to Main Portal...";
-      button.disabled = true;
-      button.style.cursor = 'not-allowed';
-      document.body.style.opacity = 0;
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 500);
-    }
-
-    function saveProgress() {
-      const progress = {
-        currentIndex: currentIndex,
-        score: score
-      };
-      sessionStorage.setItem("jlptN1Progress", JSON.stringify(progress));
-    }
-
+    // Initialize the quiz
     loadWords();
   </script>
+  
 </body>
 </html>
