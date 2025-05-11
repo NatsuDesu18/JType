@@ -25,7 +25,7 @@
       border-radius: 12px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 700px;
+      max-width: 800px;
     }
 
     h1 {
@@ -41,28 +41,43 @@
 
     .category-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
     }
 
-    .category-button {
+    .category-card {
       background-color: #4CAF50;
       color: white;
-      padding: 15px;
-      font-size: 18px;
-      border-radius: 10px;
       text-decoration: none;
+      padding: 20px;
+      border-radius: 12px;
       transition: background-color 0.3s ease, transform 0.2s ease;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .category-button:hover {
+    .category-card:hover {
       background-color: #45a049;
       transform: scale(1.03);
     }
 
-    .category-button:active {
-      background-color: #388e3c;
+    .category-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .category-card h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .category-card p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      text-align: center;
     }
 
     .toggle-btn {
@@ -89,11 +104,11 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     }
 
-    body.dark-mode .category-button {
+    body.dark-mode .category-card {
       background-color: #2e7d32;
     }
 
-    body.dark-mode .category-button:hover {
+    body.dark-mode .category-card:hover {
       background-color: #388e3c;
     }
 
@@ -115,10 +130,29 @@
   <p class="subtitle">Select a category to start your journey:</p>
 
   <div class="category-container">
-    <a href="animals.html" class="category-button">Animals</a>
-    <a href="food.html" class="category-button">Food</a>
-    <a href="jlptN5.html" class="category-button">JLPT N5</a>
-    <a href="jlptN1.html" class="category-button">JLPT N1</a>
+    <a href="animals.html" class="category-card">
+      <img src="img/tree_animals_group.png" alt="Animals">
+      <h3>Animals</h3>
+      <p>Practice animal names in Japanese.</p>
+    </a>
+
+    <a href="food.html" class="category-card">
+      <img src="img/food.png" alt="Food">
+      <h3>Food</h3>
+      <p>Learn how to say popular Japanese foods.</p>
+    </a>
+
+    <a href="jlptN5.html" class="category-card">
+      <img src="img/jlpt.png" alt="JLPT N5">
+      <h3>JLPT N5</h3>
+      <p>Study basic vocabulary for beginners.</p>
+    </a>
+
+    <a href="jlptN1.html" class="category-card">
+      <img src="img/jlpt.png" alt="JLPT N1">
+      <h3>JLPT N1</h3>
+      <p>Master advanced vocabulary for the JLPT N1.</p>
+    </a>
   </div>
 </div>
 
