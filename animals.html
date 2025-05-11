@@ -178,7 +178,7 @@ function checkAnswer() {
   if (currentWord.answers.includes(userInput)) {
     input.classList.add('submitted-correct');
     score++;
-    currentIndex++; // Increment index to go to next word
+    currentIndex++; // ✅ increment index here
     setTimeout(() => {
       saveProgress();
       window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
@@ -192,7 +192,7 @@ function checkAnswer() {
 
 function skipWord() {
   const word = words[currentIndex];
-  currentIndex++; // Increment index to go to next word
+  currentIndex++; // ✅ increment index
   saveProgress();
   window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
 }
