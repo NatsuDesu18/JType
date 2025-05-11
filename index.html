@@ -8,9 +8,10 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #121212;
-      color: #ffffff;
+      color: white;
       margin: 0;
       padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
     }
     .container {
       max-width: 600px;
@@ -18,7 +19,8 @@
       padding: 20px;
       background-color: #1e1e1e;
       border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+      transition: background-color 0.3s;
     }
     h1 {
       text-align: center;
@@ -28,6 +30,13 @@
       font-size: 30px;
       text-align: center;
       margin: 20px 0;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
     #feedback {
       text-align: center;
@@ -43,21 +52,19 @@
       padding: 10px;
       width: 100%;
       margin: 10px 0;
-      border: 1px solid #444;
+      border: 1px solid #ccc;
       border-radius: 4px;
-      background-color: #222;
-      color: #fff;
       box-sizing: border-box;
+      background-color: #2c2c2c;
+      color: white;
     }
     input.submitted-correct {
       background-color: #2e7d32;
-      border: 2px solid #4caf50;
-      color: #ffffff;
+      border: 2px solid #66bb6a;
     }
     input.submitted-incorrect {
       background-color: #b71c1c;
-      border: 2px solid #f44336;
-      color: #ffffff;
+      border: 2px solid #ef5350;
     }
     .progress-bar {
       width: 100%;
@@ -77,10 +84,10 @@
       padding: 10px;
       margin: 10px 0;
       width: 100%;
-      background-color: #222;
-      color: #fff;
-      border: 1px solid #444;
       border-radius: 4px;
+      background-color: #2c2c2c;
+      color: white;
+      border: 1px solid #555;
     }
     .button-container {
       text-align: center;
@@ -95,51 +102,28 @@
       color: white;
       border: none;
       border-radius: 4px;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #45a049;
     }
-
-    /* Loading screen styles */
-    #loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      color: #fff;
-      font-size: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
+    .dark-mode {
+      background-color: #121212;
+      color: white;
     }
-
-    .spinner {
-      border: 6px solid #333;
-      border-top: 6px solid #4caf50;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-      margin-bottom: 20px;
+    .light-mode {
+      background-color: #ffffff;
+      color: black;
     }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .dark-mode .container {
+      background-color: #1e1e1e;
+    }
+    .light-mode .container {
+      background-color: #f0f0f0;
     }
   </style>
 </head>
 <body>
-
-<!-- Loading screen -->
-<div id="loading-screen">
-  <div class="spinner"></div>
-  <div>Loading...</div>
-</div>
 
 <div class="container">
   <h1>Japanese Typing Practice</h1>
@@ -153,7 +137,7 @@
   </select>
 
   <div id="word"></div>
-  <input type="text" id="answer" onkeydown="handleKey(event)" autocomplete="off"/>
+  <input type="text" id="answer" onkeydown="handleKey(event)" />
   <div id="feedback"></div>
   <div id="score">Score: 0 / 0</div>
 
@@ -164,6 +148,7 @@
   <div class="button-container">
     <button id="hintButton" onclick="showHint()">Hint</button>
     <button id="skipButton" onclick="skipWord()">Skip</button>
+    <button id="darkModeButton" onclick="toggleDarkMode()">Toggle Dark Mode</button>
   </div>
 </div>
 
@@ -173,14 +158,23 @@ let currentCategory = 'jlptN1';
 let currentWordIndex = 0;
 let score = 0;
 let isAnswerSubmitted = false;
+let isComposing = false;
+let isDarkMode = true;
 
+const typingSound = new Audio('https://www.soundjay.com/mechanical/keyboard-1.mp3');
+typingSound.volume = 0.2;
+
+// Load JSON
 Promise.all([
-  fetch('animals.json').then(r => r.json()).then(d => categories.animals = d),
-  fetch('food.json').then(r => r.json()).then(d => categories.food = d),
-  fetch('jlptN5.json').then(r => r.json()).then(d => categories.jlptN5 = d),
-  fetch('jlptN1.json').then(r => r.json()).then(d => categories.jlptN1 = d),
-]).then(() => {
-  document.getElementById('loading-screen').style.display = 'none';
+  fetch('animals.json').then(r => r.json()),
+  fetch('food.json').then(r => r.json()),
+  fetch('jlptN5.json').then(r => r.json()),
+  fetch('jlptN1.json').then(r => r.json())
+]).then(([animals, food, jlptN5, jlptN1]) => {
+  categories.animals = animals;
+  categories.food = food;
+  categories.jlptN5 = jlptN5;
+  categories.jlptN1 = jlptN1;
   shuffleWords(categories[currentCategory]);
   updateScore();
   updateProgressBar();
@@ -188,8 +182,7 @@ Promise.all([
 });
 
 function changeCategory() {
-  const selectedCategory = document.getElementById('category').value;
-  currentCategory = selectedCategory;
+  currentCategory = document.getElementById('category').value;
   currentWordIndex = 0;
   score = 0;
   shuffleWords(categories[currentCategory]);
@@ -204,13 +197,23 @@ function showNextWord() {
   const input = document.getElementById('answer');
   input.value = '';
   input.disabled = false;
-  input.classList.remove('submitted-correct');
-  input.classList.remove('submitted-incorrect');
+  input.classList.remove('submitted-correct', 'submitted-incorrect');
   input.focus();
   isAnswerSubmitted = false;
 
-  const audio = new Audio(word.audio);
-  audio.play();
+  input.addEventListener('compositionstart', () => isComposing = true);
+  input.addEventListener('compositionend', () => isComposing = false);
+
+  input.addEventListener('input', () => {
+    typingSound.currentTime = 0;
+    typingSound.play();
+  });
+
+  if (word.audio) {
+    const audio = new Audio(word.audio);
+    audio.play();
+  }
+
   updateProgressBar();
 }
 
@@ -224,15 +227,16 @@ function shuffleWords(array) {
 function checkAnswer() {
   if (isAnswerSubmitted) return;
 
-  const answerInput = document.getElementById('answer');
-  const input = answerInput.value.trim();
+  const input = document.getElementById('answer');
+  const value = input.value.trim();
   const word = categories[currentCategory][currentWordIndex];
 
-  if (input && word.answers.includes(input)) {
+  if (value && word.answers.includes(value)) {
     score++;
+    document.getElementById('feedback').textContent = '✅ Correct!';
+    input.classList.add('submitted-correct');
+    input.disabled = true;
     isAnswerSubmitted = true;
-    answerInput.classList.add('submitted-correct');
-    answerInput.disabled = true;
     currentWordIndex++;
     updateScore();
 
@@ -242,30 +246,27 @@ function checkAnswer() {
       currentWordIndex = 0;
       score = 0;
       setTimeout(() => {
-        answerInput.disabled = false;
-        answerInput.classList.remove('submitted-correct');
+        input.disabled = false;
         shuffleWords(categories[currentCategory]);
         updateScore();
         showNextWord();
       }, 3000);
     } else {
       setTimeout(() => {
-        answerInput.disabled = false;
-        answerInput.classList.remove('submitted-correct');
+        input.disabled = false;
         showNextWord();
       }, 1000);
     }
   } else {
-    answerInput.classList.add('submitted-incorrect');
-    setTimeout(() => {
-      answerInput.classList.remove('submitted-incorrect');
-    }, 500);
+    document.getElementById('feedback').textContent = '❌ Try again!';
+    input.classList.add('submitted-incorrect');
+    setTimeout(() => input.classList.remove('submitted-incorrect'), 500);
   }
 }
 
 function skipWord() {
   const word = categories[currentCategory][currentWordIndex];
-  document.getElementById('feedback').textContent = `❌ Incorrect! The correct answer is: ${word.japanese}`;
+  document.getElementById('feedback').textContent = `❌ Skipped! Answer: ${word.japanese}`;
   currentWordIndex++;
   updateScore();
 
@@ -296,13 +297,25 @@ function updateProgressBar() {
 
 function showHint() {
   const word = categories[currentCategory][currentWordIndex];
-  const hint = word.japanese[0];
+  const hint = word.japanese?.charAt(0) || '?';
   document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
 }
 
 function handleKey(event) {
-  if (event.key === 'Enter') {
+  if (event.key === 'Enter' && !isComposing) {
     checkAnswer();
+  }
+}
+
+function toggleDarkMode() {
+  isDarkMode = !isDarkMode;
+  const body = document.body;
+  if (isDarkMode) {
+    body.classList.add('dark-mode');
+    body.classList.remove('light-mode');
+  } else {
+    body.classList.add('light-mode');
+    body.classList.remove('dark-mode');
   }
 }
 </script>
