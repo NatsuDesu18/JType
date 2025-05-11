@@ -266,7 +266,12 @@ function checkAnswer() {
 
 function skipWord() {
   const word = categories[currentCategory][currentWordIndex];
-  document.getElementById('feedback').textContent = `❌ Skipped! Answer: ${word.japanese}`;
+  if (word && word.japanese) {
+    document.getElementById('feedback').textContent = `❌ Incorrect! The correct answer is: ${word.japanese}`;
+  } else {
+    document.getElementById('feedback').textContent = '❌ No answer available';
+  }
+
   currentWordIndex++;
   updateScore();
 
@@ -297,7 +302,7 @@ function updateProgressBar() {
 
 function showHint() {
   const word = categories[currentCategory][currentWordIndex];
-  const hint = word.japanese?.charAt(0) || '?';
+  const hint = word.japanese ? word.japanese.charAt(0) : '?';  // Ensure japanese exists
   document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
 }
 
