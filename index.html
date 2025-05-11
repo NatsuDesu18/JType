@@ -9,17 +9,19 @@
       box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: 'Roboto', sans-serif;
       height: 100vh;
       background-color: #f5f5f5;
-      display: flex;
       transition: background-color 0.3s, color 0.3s;
     }
 
-    /* Sidebar */
+    body {
+      display: flex;
+    }
+
     .sidebar {
       width: 70px;
       background-color: #4CAF50;
@@ -37,11 +39,6 @@
       flex-direction: column;
       align-items: center;
       font-size: 12px;
-      transition: opacity 0.2s ease;
-    }
-
-    .sidebar a:hover {
-      opacity: 0.8;
     }
 
     .sidebar img {
@@ -50,23 +47,23 @@
       margin-bottom: 5px;
     }
 
-    /* Main content */
     .main {
       flex-grow: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 40px;
+      position: relative;
     }
 
     .container {
       text-align: center;
-      padding: 40px;
       background-color: #ffffff;
       border-radius: 12px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 800px;
+      padding: 30px;
     }
 
     h1 {
@@ -81,49 +78,49 @@
     }
 
     .category-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
     .category-button {
+      display: flex;
+      align-items: center;
       background-color: #4CAF50;
       color: white;
-      padding: 20px;
-      font-size: 16px;
-      border-radius: 10px;
+      padding: 15px 20px;
+      border-radius: 8px;
       text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       transition: background-color 0.3s ease, transform 0.2s ease;
-      min-height: 180px;
     }
 
     .category-button:hover {
       background-color: #45a049;
-      transform: scale(1.03);
+      transform: scale(1.01);
     }
 
     .category-button img {
       width: 50px;
       height: 50px;
-      margin-bottom: 10px;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .category-info {
+      text-align: left;
     }
 
     .category-title {
       font-size: 18px;
       font-weight: bold;
-      margin: 5px 0;
+      margin: 0 0 5px 0;
     }
 
     .category-desc {
       font-size: 14px;
-      color: #f0f0f0;
-      text-align: center;
+      color: #e0f2f1;
     }
 
-    /* Toggle button */
     .toggle-btn {
       position: fixed;
       top: 20px;
@@ -166,13 +163,12 @@
     }
 
     body.dark-mode .category-desc {
-      color: #cccccc;
+      color: #cfcfcf;
     }
   </style>
 </head>
 <body>
 
-<!-- Sidebar -->
 <div class="sidebar">
   <a href="settings.html">
     <img src="img/settings.png" alt="Settings">
@@ -188,7 +184,6 @@
   </a>
 </div>
 
-<!-- Main content -->
 <div class="main">
   <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Theme</button>
 
@@ -198,27 +193,35 @@
 
     <div class="category-container">
       <a href="animals.html" class="category-button">
-        <img src="img/animals.png" alt="Animals">
-        <div class="category-title">Animals</div>
-        <div class="category-desc">Learn common Japanese animal words.</div>
+        <img src="image/tree_animals_group.png" alt="Animals">
+        <div class="category-info">
+          <div class="category-title">Animals</div>
+          <div class="category-desc">Practice Japanese animal names</div>
+        </div>
       </a>
 
       <a href="food.html" class="category-button">
         <img src="img/food.png" alt="Food">
-        <div class="category-title">Food</div>
-        <div class="category-desc">Practice food vocabulary and phrases.</div>
+        <div class="category-info">
+          <div class="category-title">Food</div>
+          <div class="category-desc">Explore food and cooking words</div>
+        </div>
       </a>
 
       <a href="jlptN5.html" class="category-button">
         <img src="img/n5.png" alt="JLPT N5">
-        <div class="category-title">JLPT N5</div>
-        <div class="category-desc">Start with basic JLPT N5 vocabulary.</div>
+        <div class="category-info">
+          <div class="category-title">JLPT N5</div>
+          <div class="category-desc">Beginner JLPT vocab practice</div>
+        </div>
       </a>
 
       <a href="jlptN1.html" class="category-button">
-        <img src="img/n1.png" alt="JLPT N1">
-        <div class="category-title">JLPT N1</div>
-        <div class="category-desc">Challenge yourself with advanced terms.</div>
+        <img src="jlpt.png" alt="JLPT N1">
+        <div class="category-info">
+          <div class="category-title">JLPT N1</div>
+          <div class="category-desc">Challenge yourself with N1 terms</div>
+        </div>
       </a>
     </div>
   </div>
