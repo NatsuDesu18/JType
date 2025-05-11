@@ -108,7 +108,6 @@
   </select>
 
   <div id="word"></div>
-  <input type="text" id="answer" placeholder="Type the word in Japanese" oninput="checkAnswer()">
   <div id="feedback"></div>
   <div id="score">Score: 0 / 0</div>
 
@@ -132,7 +131,7 @@ let isAnswerSubmitted = false;
 fetch('animals.json').then(r => r.json()).then(d => categories.animals = d);
 fetch('food.json').then(r => r.json()).then(d => categories.food = d);
 fetch('jlptN5.json').then(r => r.json()).then(d => categories.jlptN5 = d);
-fetch('jlptN1.json')
+fetch('jlptN1.json').then(r => r.json()).then(d => categories.jlptN1 = d);
   .then(r => r.json())
   .then(data => {
     categories.jlptN1 = data;
@@ -255,6 +254,12 @@ function showHint() {
   const word = categories[currentCategory][currentWordIndex];
   const hint = word.japanese[0];
   document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
+}
+
+function handleKey(event) {
+  if (event.key === 'Enter') {
+    checkAnswer();
+  }
 }
 </script>
 
