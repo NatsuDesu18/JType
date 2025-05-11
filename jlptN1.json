@@ -1,45 +1,63 @@
 [
-    { "english": "government", "answers": ["せいふ", "政府"], "audio": "https://example.com/government.mp3" },
-    { "english": "international", "answers": ["こくさい", "国際"], "audio": "https://example.com/international.mp3" },
-    { "english": "society", "answers": ["しゃかい", "社会"], "audio": "https://example.com/society.mp3" },
-    { "english": "universe", "answers": ["うちゅう", "宇宙"], "audio": "https://example.com/universe.mp3" },
-    { "english": "economy", "answers": ["けいざい", "経済"], "audio": "https://example.com/economy.mp3" },
-    { "english": "philosophy", "answers": ["てつがく", "哲学"], "audio": "https://example.com/philosophy.mp3" },
-    { "english": "imagination", "answers": ["そうぞう", "創造"], "audio": "https://example.com/imagination.mp3" },
-    { "english": "revolution", "answers": ["かくめい", "革命"], "audio": "https://example.com/revolution.mp3" },
-    { "english": "research", "answers": ["けんきゅう", "研究"], "audio": "https://example.com/research.mp3" },
-    { "english": "tradition", "answers": ["でんとう", "伝統"], "audio": "https://example.com/tradition.mp3" },
-    { "english": "complex", "answers": ["ふくざつ", "複雑"], "audio": "https://example.com/complex.mp3" },
-    { "english": "advanced", "answers": ["こうきゅう", "高級"], "audio": "https://example.com/advanced.mp3" },
-    { "english": "human rights", "answers": ["じんけん", "人権"], "audio": "https://example.com/human_rights.mp3" },
-    { "english": "culture", "answers": ["ぶんか", "文化"], "audio": "https://example.com/culture.mp3" },
-    { "english": "sustainability", "answers": ["しえん", "支援"], "audio": "https://example.com/sustainability.mp3" },
-    { "english": "technology", "answers": ["ぎじゅつ", "技術"], "audio": "https://example.com/technology.mp3" },
-    { "english": "innovation", "answers": ["はっこう", "発行"], "audio": "https://example.com/innovation.mp3" },
-    { "english": "history", "answers": ["れきし", "歴史"], "audio": "https://example.com/history.mp3" },
-    { "english": "environment", "answers": ["かんきょう", "環境"], "audio": "https://example.com/environment.mp3" },
-    { "english": "education", "answers": ["きょういく", "教育"], "audio": "https://example.com/education.mp3" },
-    { "english": "communication", "answers": ["こうつう", "交通"], "audio": "https://example.com/communication.mp3" },
-    { "english": "law", "answers": ["ほうりつ", "法律"], "audio": "https://example.com/law.mp3" },
-    { "english": "consequence", "answers": ["けっか", "結果"], "audio": "https://example.com/consequence.mp3" },
-    { "english": "theory", "answers": ["りろん", "理論"], "audio": "https://example.com/theory.mp3" },
-    { "english": "policy", "answers": ["せいさく", "政策"], "audio": "https://example.com/policy.mp3" },
-    { "english": "contract", "answers": ["けいやく", "契約"], "audio": "https://example.com/contract.mp3" },
-    { "english": "investment", "answers": ["とうし", "投資"], "audio": "https://example.com/investment.mp3" },
-    { "english": "negotiation", "answers": ["こうしょう", "交渉"], "audio": "https://example.com/negotiation.mp3" },
-    { "english": "experiment", "answers": ["じっけん", "実験"], "audio": "https://example.com/experiment.mp3" },
-    { "english": "achievement", "answers": ["せいこう", "成功"], "audio": "https://example.com/achievement.mp3" },
-    { "english": "diplomacy", "answers": ["がいこう", "外交"], "audio": "https://example.com/diplomacy.mp3" },
-    { "english": "leadership", "answers": ["りーダーシップ", "リーダーシップ"], "audio": "https://example.com/leadership.mp3" },
-    { "english": "criticism", "answers": ["ひょうか", "評価"], "audio": "https://example.com/criticism.mp3" },
-    { "english": "artificial intelligence", "answers": ["じんこうちのう", "人工知能"], "audio": "https://example.com/artificial_intelligence.mp3" },
-    { "english": "automation", "answers": ["じどうか", "自動化"], "audio": "https://example.com/automation.mp3" },
-    { "english": "progress", "answers": ["しんぽ", "進歩"], "audio": "https://example.com/progress.mp3" },
-    { "english": "information", "answers": ["じょうほう", "情報"], "audio": "https://example.com/information.mp3" },
-    { "english": "philanthropy", "answers": ["こうけん", "貢献"], "audio": "https://example.com/philanthropy.mp3" },
-    { "english": "critique", "answers": ["ひょうろん", "評論"], "audio": "https://example.com/critique.mp3" },
-    { "english": "debate", "answers": ["ぎろん", "議論"], "audio": "https://example.com/debate.mp3" },
-    { "english": "pioneer", "answers": ["せんがくしゃ", "先駆者"], "audio": "https://example.com/pioneer.mp3" },
-    { "english": "investment", "answers": ["とうし", "投資"], "audio": "https://example.com/investment.mp3" },
-    { "english": "evolution", "answers": ["しんか", "進化"], "audio": "https://example.com/evolution.mp3" }
+  {
+    "english": "government",
+    "answers": ["せいふ", "政府"],
+    "audio": "https://example.com/government.mp3",
+    "definition": "The governing body of a nation, state, or community."
+  },
+  {
+    "english": "international",
+    "answers": ["こくさい", "国際"],
+    "audio": "https://example.com/international.mp3",
+    "definition": "Existing, occurring, or carried on between nations."
+  },
+  {
+    "english": "society",
+    "answers": ["しゃかい", "社会"],
+    "audio": "https://example.com/society.mp3",
+    "definition": "The aggregate of people living together in a more or less ordered community."
+  },
+  {
+    "english": "universe",
+    "answers": ["うちゅう", "宇宙"],
+    "audio": "https://example.com/universe.mp3",
+    "definition": "All existing matter and space considered as a whole."
+  },
+  {
+    "english": "economy",
+    "answers": ["けいざい", "経済"],
+    "audio": "https://example.com/economy.mp3",
+    "definition": "The system of production, consumption, and distribution of goods and services."
+  },
+  {
+    "english": "philosophy",
+    "answers": ["てつがく", "哲学"],
+    "audio": "https://example.com/philosophy.mp3",
+    "definition": "The study of the fundamental nature of knowledge, reality, and existence."
+  },
+  {
+    "english": "imagination",
+    "answers": ["そうぞう", "創造"],
+    "audio": "https://example.com/imagination.mp3",
+    "definition": "The ability of the mind to be creative or resourceful."
+  },
+  {
+    "english": "revolution",
+    "answers": ["かくめい", "革命"],
+    "audio": "https://example.com/revolution.mp3",
+    "definition": "A forcible overthrow of a government or social order in favor of a new system."
+  },
+  {
+    "english": "research",
+    "answers": ["けんきゅう", "研究"],
+    "audio": "https://example.com/research.mp3",
+    "definition": "The systematic investigation into and study of materials and sources to establish facts."
+  },
+  {
+    "english": "tradition",
+    "answers": ["でんとう", "伝統"],
+    "audio": "https://example.com/tradition.mp3",
+    "definition": "The transmission of customs or beliefs from generation to generation."
+  },
+  ...
 ]
