@@ -1,92 +1,107 @@
 [
   {
     "english": "cat",
-    "japanese": "ねこ",
+    "japanese": "猫",
     "answers": ["ねこ", "ネコ", "猫"],
+    "definition": "A small domesticated carnivorous mammal.",
     "audio": "audio/animal_cat.mp3"
   },
   {
     "english": "dog",
-    "japanese": "いぬ",
+    "japanese": "犬",
     "answers": ["いぬ", "イヌ", "犬"],
+    "definition": "A domesticated carnivorous mammal typically kept as a pet.",
     "audio": "audio/animal_dog.mp3"
   },
   {
     "english": "bird",
-    "japanese": "とり",
+    "japanese": "鳥",
     "answers": ["とり", "トリ", "鳥"],
+    "definition": "A warm-blooded egg-laying vertebrate distinguished by feathers and wings.",
     "audio": "audio/animal_bird.mp3"
   },
   {
     "english": "cow",
-    "japanese": "うし",
+    "japanese": "牛",
     "answers": ["うし", "ウシ", "牛"],
+    "definition": "A large domesticated ungulate raised for milk or meat.",
     "audio": "audio/animal_cow.mp3"
   },
   {
     "english": "horse",
-    "japanese": "うま",
+    "japanese": "馬",
     "answers": ["うま", "ウマ", "馬"],
+    "definition": "A large solid-hoofed herbivorous mammal used for riding and racing.",
     "audio": "audio/animal_horse.mp3"
   },
   {
     "english": "monkey",
-    "japanese": "さる",
+    "japanese": "猿",
     "answers": ["さる", "サル", "猿"],
+    "definition": "A small to medium-sized primate with a long tail.",
     "audio": "audio/animal_monkey.mp3"
   },
   {
     "english": "rabbit",
-    "japanese": "うさぎ",
+    "japanese": "兎",
     "answers": ["うさぎ", "ウサギ", "兎"],
+    "definition": "A small burrowing mammal with long ears and soft fur.",
     "audio": "audio/animal_rabbit.mp3"
   },
   {
     "english": "elephant",
-    "japanese": "ぞう",
+    "japanese": "象",
     "answers": ["ぞう", "ゾウ", "象"],
+    "definition": "A large herbivorous mammal noted for its trunk and tusks.",
     "audio": "audio/animal_elephant.mp3"
   },
   {
     "english": "tiger",
-    "japanese": "とら",
+    "japanese": "虎",
     "answers": ["とら", "トラ", "虎"],
+    "definition": "A large wild cat with a striped coat.",
     "audio": "audio/animal_tiger.mp3"
   },
   {
     "english": "fox",
-    "japanese": "きつね",
+    "japanese": "狐",
     "answers": ["きつね", "キツネ", "狐"],
+    "definition": "A small carnivorous mammal with a bushy tail and pointed ears.",
     "audio": "audio/animal_fox.mp3"
   },
   {
     "english": "bear",
-    "japanese": "くま",
+    "japanese": "熊",
     "answers": ["くま", "クマ", "熊"],
+    "definition": "A large heavy mammal with thick fur and a short tail.",
     "audio": "audio/animal_bear.mp3"
   },
   {
     "english": "sheep",
-    "japanese": "ひつじ",
+    "japanese": "羊",
     "answers": ["ひつじ", "ヒツジ", "羊"],
+    "definition": "A domesticated ruminant animal with a thick woolly coat.",
     "audio": "audio/animal_sheep.mp3"
   },
   {
     "english": "lion",
-    "japanese": "らいおん",
+    "japanese": "ライオン",
     "answers": ["らいおん", "ライオン"],
+    "definition": "A large carnivorous feline known as the king of beasts.",
     "audio": "audio/animal_lion.mp3"
   },
   {
     "english": "giraffe",
-    "japanese": "きりん",
+    "japanese": "麒麟",
     "answers": ["きりん", "キリン", "麒麟"],
+    "definition": "The tallest land animal with a very long neck.",
     "audio": "audio/animal_giraffe.mp3"
   },
   {
     "english": "pig",
-    "japanese": "ぶた",
+    "japanese": "豚",
     "answers": ["ぶた", "ブタ", "豚"],
+    "definition": "A domesticated animal raised for pork.",
     "audio": "audio/animal_pig.mp3"
   }
 ]
