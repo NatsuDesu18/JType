@@ -137,7 +137,7 @@
   </select>
 
   <div id="word"></div>
-  <input type="text" id="answer" onkeydown="handleKey(event)" />
+  <input type="text" id="answer" onkeydown="handleKey(event)" autocomplete="off" placeholder="Type your answer here" />
   <div id="feedback"></div>
   <div id="score">Score: 0 / 0</div>
 
@@ -160,6 +160,21 @@ let score = 0;
 let isAnswerSubmitted = false;
 let isComposing = false;
 let isDarkMode = true;
+let isComposing = false;
+
+function handleKey(event) {
+  if (isComposing) return;
+  if (event.key === 'Enter') {
+    checkAnswer();
+  }
+}
+
+document.getElementById('answer').addEventListener('compositionstart', () => {
+  isComposing = true;
+});
+document.getElementById('answer').addEventListener('compositionend', () => {
+  isComposing = false;
+});
 
 const typingSound = new Audio('https://www.soundjay.com/mechanical/keyboard-1.mp3');
 typingSound.volume = 0.2;
@@ -231,34 +246,20 @@ function checkAnswer() {
   const input = answerInput.value.trim();
   const word = categories[currentCategory][currentWordIndex];
 
-  if (input && word.answers.includes(input)) {
+  if (!input) return;
+
+  if (word.answers.includes(input)) {
     score++;
-    document.getElementById('feedback').textContent = '✅ Correct!';
     isAnswerSubmitted = true;
-    answerInput.classList.add('submitted-correct');
     answerInput.disabled = true;
-    currentWordIndex++;
+    answerInput.classList.add('submitted-correct');
     updateScore();
 
-    if (currentWordIndex >= categories[currentCategory].length) {
-      document.getElementById('feedback').textContent =
-        `🎉 Finished! Final Score: ${score} / ${categories[currentCategory].length}`;
-      currentWordIndex = 0;
-      score = 0;
-      setTimeout(() => {
-        answerInput.disabled = false;
-        answerInput.classList.remove('submitted-correct');
-        shuffleWords(categories[currentCategory]);
-        updateScore();
-        showNextWord();
-      }, 3000);
-    } else {
-      // Redirect to answer page with the correct answer
-      setTimeout(() => {
-        const correctAnswer = word.japanese;  // Assuming word.japanese is the correct answer
-        window.location.href = `answer.html?answer=${encodeURIComponent(correctAnswer)}`;
-      }, 1000);  // Delay before redirect
-    }
+    // Redirect to answer.html and pass the Japanese word in the URL
+    const correctAnswer = word.japanese;
+    setTimeout(() => {
+      window.location.href = `answer.html?answer=${encodeURIComponent(correctAnswer)}`;
+    }, 500);
   } else {
     document.getElementById('feedback').textContent = '❌ Try again!';
     answerInput.classList.add('submitted-incorrect');
@@ -267,7 +268,6 @@ function checkAnswer() {
     }, 500);
   }
 }
-
 
 function skipWord() {
   const word = categories[currentCategory][currentWordIndex];
