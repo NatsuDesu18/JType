@@ -140,22 +140,22 @@
     async function loadAnimals() {
       const res = await fetch('animals.json');
       words = await res.json();
-      shuffleWords(words);
-      currentIndex = 0;
-      score = 0;
+
+      // Check if there is saved progress in sessionStorage
+      const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
+      if (savedProgress) {
+        currentIndex = savedProgress.currentIndex || 0;
+        score = savedProgress.score || 0;
+      } else {
+        shuffleWords(words); // If no saved progress, shuffle the words
+      }
+
       updateScore();
       updateProgressBar();
       showWord();
     }
 
     function showWord() {
-      if (currentIndex >= words.length) {
-        alert("You've completed all the questions!");
-        sessionStorage.removeItem("quizProgress");
-        currentIndex = 0;
-        score = 0;
-        shuffleWords(words);
-      }
       const word = words[currentIndex];
       document.getElementById('word').textContent = word.english;
       input.value = '';
@@ -178,10 +178,10 @@
       if (currentWord.answers.includes(userInput)) {
         input.classList.add('submitted-correct');
         score++;
-        currentIndex++;
         setTimeout(() => {
+          // Save the current progress to sessionStorage before navigating to the answer page
           saveProgress();
-          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.answers[0])}&definition=${encodeURIComponent(currentWord.english)}`;
+          window.location.href = `animalsanswer.html?answer=${encodeURIComponent(currentWord.japanese)}&definition=${encodeURIComponent(currentWord.english)}`;
         }, 500);
       } else {
         input.classList.add('submitted-incorrect');
@@ -192,14 +192,14 @@
 
     function skipWord() {
       const word = words[currentIndex];
-      currentIndex++;
+      // Save the current progress to sessionStorage before navigating to the answer page
       saveProgress();
-      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.answers[0])}&definition=${encodeURIComponent(word.english)}`;
+      window.location.href = `animalsanswer.html?answer=${encodeURIComponent(word.japanese)}&definition=${encodeURIComponent(word.english)}`;
     }
 
     function showHint() {
       const word = words[currentIndex];
-      const hint = word.answers[0] ? word.answers[0].charAt(0) : '?';
+      const hint = word.japanese ? word.japanese.charAt(0) : '?';
       document.getElementById('feedback').textContent = `Hint: Starts with 「${hint}」`;
     }
 
@@ -218,10 +218,11 @@
       document.body.classList.toggle('light-mode', !isDarkMode);
     }
 
+    // Save the current progress to sessionStorage
     function saveProgress() {
       const progress = {
-        currentIndex,
-        score
+        currentIndex: currentIndex,
+        score: score
       };
       sessionStorage.setItem("quizProgress", JSON.stringify(progress));
     }
