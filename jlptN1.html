@@ -147,21 +147,27 @@ input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !isComposing) checkAnswer();
 });
 
-async function loadjlptN1() {
-  const res = await fetch('jlptN1.json');
-  words = await res.json();
+async function loadAnimals() {
+  try {
+    const res = await fetch('jlptN1.json');
+    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    words = await res.json();
 
-  const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
-  if (savedProgress) {
-    currentIndex = savedProgress.currentIndex || 0;
-    score = savedProgress.score || 0;
-  } else {
-    shuffleWords(words);
+    const savedProgress = JSON.parse(sessionStorage.getItem("quizProgress"));
+    if (savedProgress) {
+      currentIndex = savedProgress.currentIndex || 0;
+      score = savedProgress.score || 0;
+    } else {
+      shuffleWords(words);
+    }
+
+    updateScore();
+    updateProgressBar();
+    showWord();
+  } catch (error) {
+    console.error('Failed to load vocabulary:', error);
+    document.getElementById('word').textContent = "Failed to load vocab. Check console.";
   }
-
-  updateScore();
-  updateProgressBar();
-  showWord();
 }
 
 function showWord() {
