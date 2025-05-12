@@ -55,22 +55,20 @@
   </div>
 
   <script>
-    // Get the word passed in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const answer = urlParams.get("answer");
 
-    async function fetchAnimalsData() {
+    async function fetchjlptN1Data() {
       try {
         const response = await fetch("jlptN1.json");
-        const animals = await response.json();
+        const vocabList = await response.json();
 
-        const wordData = animals.find(item => item.japanese === answer);
+        const wordData = vocabList.find(item => item.japanese === answer);
 
         if (wordData) {
           document.getElementById("japanese").textContent = wordData.japanese || "No answer found";
           document.getElementById("english").textContent = wordData.english || "No definition found";
 
-          // Store the current word in sessionStorage for feedback or future reference
           sessionStorage.setItem("lastAnswer", JSON.stringify(wordData));
         } else {
           document.getElementById("japanese").textContent = "Word not found";
@@ -83,12 +81,10 @@
       }
     }
 
-    // Run the function to fetch data on page load
+    // Correct function call
     fetchjlptN1Data();
 
-    // Go back to the quiz page when the button is clicked
     function goBack() {
-      // Navigate back to the quiz page and keep the session progress intact
       window.location.href = "jlptN1.html";
     }
   </script>
