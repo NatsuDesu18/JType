@@ -65,13 +65,13 @@
     const urlParams = new URLSearchParams(window.location.search);
     const answer = urlParams.get("answer");
 
-    async function fetchAnimalsData() {
+    async function fetchjlptN1Data() {
       try {
         const response = await fetch("jlptN1.json");
         const animals = await response.json();
 
         // Match against any item where answer is included in the answers array
-        const wordData = animals.find(item =>
+        const wordData = jlptN1.find(item =>
           item.answers.includes(answer)
         );
 
@@ -95,7 +95,7 @@
       }
     }
 
-    fetchAnimalsData();
+    fetchjlptN1Data();
 
     function goBack() {
       window.location.href = "jlptN1.html";
