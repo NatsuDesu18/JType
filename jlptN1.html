@@ -147,7 +147,7 @@ input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !isComposing) checkAnswer();
 });
 
-async function loadAnimals() {
+async function loadjlptN1() {
   const res = await fetch('jlptN1.json');
   words = await res.json();
 
@@ -257,7 +257,7 @@ function goBackToMainPortal() {
   button.style.cursor = 'not-allowed';
   document.body.style.opacity = 0;
   setTimeout(() => {
-    window.location.href = 'index.html';
+    window.location.href = 'index.html'; // Assuming this is still your main portal
   }, 500);
 }
 
