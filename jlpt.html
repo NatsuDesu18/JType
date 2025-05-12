@@ -8,10 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
-      --primary: #4caf50;
-      --primary-hover: #45a049;
-      --danger: #ff5722;
-      --danger-hover: #e64a19;
+      --primary: linear-gradient(45deg, #ff69b4, #8a2be2);
+      --primary-hover: linear-gradient(45deg, #e055a3, #6a1dbb);
+      --danger: #b71c1c;
+      --danger-hover: #8a1313;
       --bg-light: #f4f4f4;
       --bg-dark: #121212;
       --card-bg-light: #ffffff;
@@ -46,12 +46,12 @@
 
     .card {
       background-color: var(--card-bg-light);
-      padding: 50px 40px; /* Increased padding */
+      padding: 50px 40px;
       border-radius: 16px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       text-align: center;
       width: 100%;
-      max-width: 1300px; /* Increased max-width */
+      max-width: 1300px;
       transition: background-color 0.3s, box-shadow 0.3s;
     }
 
@@ -62,7 +62,7 @@
 
     h1 {
       margin-bottom: 30px;
-      font-size: 2.5rem; /* Increased font size */
+      font-size: 2.5rem;
       font-weight: 600;
     }
 
@@ -76,9 +76,9 @@
       display: block;
       width: 100%;
       padding: 14px 0;
-      font-size: 1.2rem; /* Increased font size */
+      font-size: 1.2rem;
       margin: 10px 0;
-      background-color: var(--primary);
+      background-image: var(--primary);
       color: white;
       border: none;
       border-radius: 8px;
@@ -91,7 +91,7 @@
     }
 
     .button:hover {
-      background-color: var(--primary-hover);
+      background-image: var(--primary-hover);
       transform: scale(1.03);
     }
 
@@ -108,8 +108,8 @@
       top: 20px;
       right: 20px;
       background-color: transparent;
-      border: 2px solid var(--primary);
-      color: var(--primary);
+      border: 2px solid #ff69b4;
+      color: #ff69b4;
       padding: 8px 14px;
       border-radius: 8px;
       font-size: 0.9rem;
@@ -118,7 +118,7 @@
     }
 
     .dark-mode-toggle:hover {
-      background-color: var(--primary);
+      background-color: #ff69b4;
       color: white;
     }
 
@@ -134,13 +134,14 @@
 
     .level-card {
       background-color: var(--card-bg-light);
+      color: var(--text-light);
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
       text-align: center;
       flex: 0 0 auto;
-      width: 300px; /* Increased width */
-      transition: transform 0.3s ease;
+      width: 300px;
+      transition: transform 0.3s ease, background-color 0.3s, color 0.3s;
     }
 
     .level-card:hover {
@@ -152,10 +153,15 @@
       margin-bottom: 10px;
     }
 
+    body.dark-mode .level-card {
+      background-color: var(--card-bg-dark);
+      color: #fff;
+    }
+
     .section-divider {
       width: 100%;
       height: 2px;
-      background-color: var(--primary);
+      background-color: #ff69b4;
       margin: 20px 0;
     }
 
@@ -167,7 +173,7 @@
     }
 
     footer a {
-      color: var(--primary);
+      color: #ff69b4;
       text-decoration: none;
     }
 
@@ -201,7 +207,7 @@
   <div class="card">
     <h1>Choose Your JLPT Level</h1>
     <p>Select a JLPT level to begin your study. Each level includes various lessons and quizzes to help you improve your Japanese proficiency.</p>
-    
+
     <div class="level-grid">
       <div class="level-card">
         <i class="fa fa-book"></i>
@@ -234,7 +240,7 @@
         <a href="jlpt_n5.html" class="button">Start Learning</a>
       </div>
     </div>
-    
+
     <div class="section-divider"></div>
     <a href="index.html" class="button back-button">← Back to Main Portal</a>
   </div>
