@@ -148,7 +148,7 @@
       if (e.key === 'Enter' && !isComposing) checkAnswer();
     });
 
-    async function loadjlptN1answers() {
+    async function loadjlptN1() {
       const res = await fetch('jlptN1.json');
       words = await res.json();
 
