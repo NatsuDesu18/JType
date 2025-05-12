@@ -22,14 +22,20 @@
       border-radius: 12px;
       text-align: center;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      max-width: 500px;
     }
     .japanese {
       font-size: 48px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     .english {
       font-size: 24px;
       color: #aaa;
+      margin-bottom: 10px;
+    }
+    .definition {
+      font-size: 18px;
+      color: #ccc;
     }
     button {
       margin-top: 30px;
@@ -51,6 +57,7 @@
   <div class="card">
     <div class="japanese" id="japanese">...</div>
     <div class="english" id="english">...</div>
+    <div class="definition" id="definition">...</div>
     <button onclick="goBack()">Continue</button>
   </div>
 
@@ -58,31 +65,37 @@
     const urlParams = new URLSearchParams(window.location.search);
     const answer = urlParams.get("answer");
 
-    async function fetchjlptN1Data() {
+    async function fetchAnimalsData() {
       try {
         const response = await fetch("jlptN1.json");
-        const vocabList = await response.json();
+        const animals = await response.json();
 
-        const wordData = vocabList.find(item => item.japanese === answer);
+        // Match against any item where answer is included in the answers array
+        const wordData = animals.find(item =>
+          item.answers.includes(answer)
+        );
 
         if (wordData) {
           document.getElementById("japanese").textContent = wordData.japanese || "No answer found";
-          document.getElementById("english").textContent = wordData.english || "No definition found";
+          document.getElementById("english").textContent = wordData.english || "No translation found";
+          document.getElementById("definition").textContent = wordData.definition || "No definition found";
 
+          // Store the current word for reference
           sessionStorage.setItem("lastAnswer", JSON.stringify(wordData));
         } else {
           document.getElementById("japanese").textContent = "Word not found";
-          document.getElementById("english").textContent = "Definition not available";
+          document.getElementById("english").textContent = "";
+          document.getElementById("definition").textContent = "";
         }
       } catch (error) {
         console.error("Error fetching jlptN1.json:", error);
         document.getElementById("japanese").textContent = "Error";
         document.getElementById("english").textContent = "Could not load data";
+        document.getElementById("definition").textContent = "";
       }
     }
 
-    // Correct function call
-    fetchjlptN1Data();
+    fetchAnimalsData();
 
     function goBack() {
       window.location.href = "jlptN1.html";
