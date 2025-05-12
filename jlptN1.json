@@ -1,282 +1,522 @@
 [
-  {
-    "english": "government",
-    "japanese": ["せいふ", "政府"],
-    "definition": "The group of people with the authority to govern a country or state.",
-    "answers": ["せいふ", "政府"],
-    "audio": "https://example.com/government.mp3"
-  },
-  {
-    "english": "international",
-    "japanese": ["こくさい", "国際"],
-    "definition": "Existing, occurring, or carried on between nations.",
-    "answers": ["こくさい", "国際"],
-    "audio": "https://example.com/international.mp3"
-  },
-  {
-    "english": "society",
-    "japanese": ["しゃかい", "社会"],
-    "definition": "The aggregate of people living together in a more or less ordered community.",
-    "answers": ["しゃかい", "社会"],
-    "audio": "https://example.com/society.mp3"
-  },
-  {
-    "english": "universe",
-    "japanese": ["うちゅう", "宇宙"],
-    "definition": "All existing matter and space considered as a whole.",
-    "answers": ["うちゅう", "宇宙"],
-    "audio": "https://example.com/universe.mp3"
-  },
-  {
-    "english": "economy",
-    "japanese": ["けいざい", "経済"],
-    "definition": "The wealth and resources of a country or region, especially in terms of production and consumption.",
-    "answers": ["けいざい", "経済"],
-    "audio": "https://example.com/economy.mp3"
-  },
-  {
-    "english": "philosophy",
-    "japanese": ["てつがく", "哲学"],
-    "definition": "The study of the fundamental nature of knowledge, reality, and existence.",
-    "answers": ["てつがく", "哲学"],
-    "audio": "https://example.com/philosophy.mp3"
-  },
-  {
-    "english": "imagination",
-    "japanese": ["そうぞう", "創造"],
-    "definition": "The faculty or action of forming new ideas or images not present to the senses.",
-    "answers": ["そうぞう", "創造"],
-    "audio": "https://example.com/imagination.mp3"
-  },
-  {
-    "english": "revolution",
-    "japanese": ["かくめい", "革命"],
-    "definition": "A forcible overthrow of a government or social order in favor of a new system.",
-    "answers": ["かくめい", "革命"],
-    "audio": "https://example.com/revolution.mp3"
-  },
-  {
-    "english": "research",
-    "japanese": ["けんきゅう", "研究"],
-    "definition": "The systematic investigation into and study of materials and sources.",
-    "answers": ["けんきゅう", "研究"],
-    "audio": "https://example.com/research.mp3"
-  },
-  {
-    "english": "tradition",
-    "japanese": ["でんとう", "伝統"],
-    "definition": "Customs or beliefs passed down from generation to generation.",
-    "answers": ["でんとう", "伝統"],
-    "audio": "https://example.com/tradition.mp3"
-  },
-  {
-    "english": "complex",
-    "japanese": ["ふくざつ", "複雑"],
-    "definition": "Consisting of many different and connected parts; not simple.",
-    "answers": ["ふくざつ", "複雑"],
-    "audio": "https://example.com/complex.mp3"
-  },
-  {
-    "english": "advanced",
-    "japanese": ["こうきゅう", "高級"],
-    "definition": "Far on or ahead in development or progress.",
-    "answers": ["こうきゅう", "高級"],
-    "audio": "https://example.com/advanced.mp3"
-  },
-  {
-    "english": "human rights",
-    "japanese": ["じんけん", "人権"],
-    "definition": "Rights believed to belong justifiably to every person.",
-    "answers": ["じんけん", "人権"],
-    "audio": "https://example.com/human_rights.mp3"
-  },
-  {
-    "english": "culture",
-    "japanese": ["ぶんか", "文化"],
-    "definition": "The ideas, customs, and social behavior of a particular people or society.",
-    "answers": ["ぶんか", "文化"],
-    "audio": "https://example.com/culture.mp3"
-  },
-  {
-    "english": "sustainability",
-    "japanese": ["しえん", "支援"],
-    "definition": "The ability to be maintained at a certain rate or level, especially without harming the environment.",
-    "answers": ["しえん", "支援"],
-    "audio": "https://example.com/sustainability.mp3"
-  },
-  {
-    "english": "technology",
-    "japanese": ["ぎじゅつ", "技術"],
-    "definition": "The application of scientific knowledge for practical purposes.",
-    "answers": ["ぎじゅつ", "技術"],
-    "audio": "https://example.com/technology.mp3"
-  },
-  {
-    "english": "innovation",
-    "japanese": ["はっこう", "発行"],
-    "definition": "A new method, idea, product, etc.",
-    "answers": ["はっこう", "発行"],
-    "audio": "https://example.com/innovation.mp3"
-  },
-  {
-    "english": "history",
-    "japanese": ["れきし", "歴史"],
-    "definition": "The study of past events.",
-    "answers": ["れきし", "歴史"],
-    "audio": "https://example.com/history.mp3"
-  },
-  {
-    "english": "environment",
-    "japanese": ["かんきょう", "環境"],
-    "definition": "The surroundings or conditions in which a person, animal, or plant lives or operates.",
-    "answers": ["かんきょう", "環境"],
-    "audio": "https://example.com/environment.mp3"
-  },
-  {
-    "english": "education",
-    "japanese": ["きょういく", "教育"],
-    "definition": "The process of receiving or giving systematic instruction.",
-    "answers": ["きょういく", "教育"],
-    "audio": "https://example.com/education.mp3"
-  },
-  {
-    "english": "communication",
-    "japanese": ["こうつう", "交通"],
-    "definition": "The imparting or exchanging of information or news.",
-    "answers": ["こうつう", "交通"],
-    "audio": "https://example.com/communication.mp3"
-  },
-  {
-    "english": "law",
-    "japanese": ["ほうりつ", "法律"],
-    "definition": "A system of rules that a particular country or community recognizes as regulating the actions of its members.",
-    "answers": ["ほうりつ", "法律"],
-    "audio": "https://example.com/law.mp3"
-  },
-  {
-    "english": "consequence",
-    "japanese": ["けっか", "結果"],
-    "definition": "A result or effect of an action or condition.",
-    "answers": ["けっか", "結果"],
-    "audio": "https://example.com/consequence.mp3"
-  },
-  {
-    "english": "theory",
-    "japanese": ["りろん", "理論"],
-    "definition": "A set of ideas intended to explain something, especially one based on general principles independent of the thing to be explained.",
-    "answers": ["りろん", "理論"],
-    "audio": "https://example.com/theory.mp3"
-  },
-  {
-    "english": "policy",
-    "japanese": ["せいさく", "政策"],
-    "definition": "A course or principle of action adopted or proposed by an organization or individual.",
-    "answers": ["せいさく", "政策"],
-    "audio": "https://example.com/policy.mp3"
-  },
-  {
-    "english": "contract",
-    "japanese": ["けいやく", "契約"],
-    "definition": "A written or spoken agreement that is intended to be enforceable by law.",
-    "answers": ["けいやく", "契約"],
-    "audio": "https://example.com/contract.mp3"
-  },
-  {
-    "english": "investment",
-    "japanese": ["とうし", "投資"],
-    "definition": "The action or process of investing money for profit or material result.",
-    "answers": ["とうし", "投資"],
-    "audio": "https://example.com/investment.mp3"
-  },
-  {
-    "english": "negotiation",
-    "japanese": ["こうしょう", "交渉"],
-    "definition": "Discussion aimed at reaching an agreement.",
-    "answers": ["こうしょう", "交渉"],
-    "audio": "https://example.com/negotiation.mp3"
-  },
-  {
-    "english": "experiment",
-    "japanese": ["じっけん", "実験"],
-    "definition": "A scientific procedure undertaken to test a hypothesis.",
-    "answers": ["じっけん", "実験"],
-    "audio": "https://example.com/experiment.mp3"
-  },
-  {
-    "english": "achievement",
-    "japanese": ["せいこう", "成功"],
-    "definition": "A thing done successfully, typically by effort, courage, or skill.",
-    "answers": ["せいこう", "成功"],
-    "audio": "https://example.com/achievement.mp3"
-  },
-  {
-    "english": "diplomacy",
-    "japanese": ["がいこう", "外交"],
-    "definition": "The profession, activity, or skill of managing international relations.",
-    "answers": ["がいこう", "外交"],
-    "audio": "https://example.com/diplomacy.mp3"
-  },
-  {
-    "english": "leadership",
-    "japanese": ["りーダーシップ", "リーダーシップ"],
-    "definition": "The action of leading a group of people or an organization.",
-    "answers": ["りーダーシップ", "リーダーシップ"],
-    "audio": "https://example.com/leadership.mp3"
-  },
-  {
-    "english": "criticism",
-    "japanese": ["ひょうか", "評価"],
-    "definition": "The expression of disapproval of someone or something based on perceived faults or mistakes.",
-    "answers": ["ひょうか", "評価"],
-    "audio": "https://example.com/criticism.mp3"
-  },
-  {
-    "english": "artificial intelligence",
-    "japanese": ["じんこうちのう", "人工知能"],
-    "definition": "The simulation of human intelligence processes by machines, especially computer systems.",
-    "answers": ["じんこうちのう", "人工知能"],
-    "audio": "https://example.com/artificial_intelligence.mp3"
-  },
-  {
-    "english": "automation",
-    "japanese": ["じどうか", "自動化"],
-    "definition": "The use of largely automatic equipment in a system of operation or production.",
-    "answers": ["じどうか", "自動化"],
-    "audio": "https://example.com/automation.mp3"
-  },
-  {
-    "english": "progress",
-    "japanese": ["しんぽ", "進歩"],
-    "definition": "Forward or onward movement toward a destination, especially a better state.",
-    "answers": ["しんぽ", "進歩"],
-    "audio": "https://example.com/progress.mp3"
-  },
-  {
-    "english": "information",
-    "japanese": ["じょうほう", "情報"],
-    "definition": "Data that is processed or organized in a meaningful way to be useful for decision-making.",
-    "answers": ["じょうほう", "情報"],
-    "audio": "https://example.com/information.mp3"
-  },
-  {
-    "english": "philanthropy",
-    "japanese": ["こうけん", "貢献"],
-    "definition": "The desire to promote the welfare of others, typically through the donation of money, resources, or time.",
-    "answers": ["こうけん", "貢献"],
-    "audio": "https://example.com/philanthropy.mp3"
-  },
-  {
-    "english": "critique",
-    "japanese": ["ひょうろん", "評論"],
-    "definition": "A detailed analysis and assessment of something, especially a literary, philosophical, or political theory.",
-    "answers": ["ひょうろん", "評論"],
-    "audio": "https://example.com/critique.mp3"
-  },
-  {
-    "english": "debate",
-    "japanese": ["ぎろん", "議論"],
-    "definition": "A formal discussion on a particular topic, in which opposing arguments are put forward.",
-    "answers": ["ぎろん", "議論"],
-    "audio": "https://example.com/debate.mp3"
-  }
+    {
+        "english": "government",
+        "japanese": [
+            "せいふ",
+            "政府"
+        ],
+        "definition": "The group of people with the authority to govern a country or state.",
+        "answers": [
+            "せいふ",
+            "政府"
+        ],
+        "audio": "https://example.com/government.mp3"
+    },
+    {
+        "english": "international",
+        "japanese": [
+            "こくさい",
+            "国際"
+        ],
+        "definition": "Existing, occurring, or carried on between nations.",
+        "answers": [
+            "こくさい",
+            "国際"
+        ],
+        "audio": "https://example.com/international.mp3"
+    },
+    {
+        "english": "society",
+        "japanese": [
+            "しゃかい",
+            "社会"
+        ],
+        "definition": "The aggregate of people living together in a more or less ordered community.",
+        "answers": [
+            "しゃかい",
+            "社会"
+        ],
+        "audio": "https://example.com/society.mp3"
+    },
+    {
+        "english": "universe",
+        "japanese": [
+            "うちゅう",
+            "宇宙"
+        ],
+        "definition": "All existing matter and space considered as a whole.",
+        "answers": [
+            "うちゅう",
+            "宇宙"
+        ],
+        "audio": "https://example.com/universe.mp3"
+    },
+    {
+        "english": "economy",
+        "japanese": [
+            "けいざい",
+            "経済"
+        ],
+        "definition": "The wealth and resources of a country or region, especially in terms of production and consumption.",
+        "answers": [
+            "けいざい",
+            "経済"
+        ],
+        "audio": "https://example.com/economy.mp3"
+    },
+    {
+        "english": "philosophy",
+        "japanese": [
+            "てつがく",
+            "哲学"
+        ],
+        "definition": "The study of the fundamental nature of knowledge, reality, and existence.",
+        "answers": [
+            "てつがく",
+            "哲学"
+        ],
+        "audio": "https://example.com/philosophy.mp3"
+    },
+    {
+        "english": "imagination",
+        "japanese": [
+            "そうぞう",
+            "創造"
+        ],
+        "definition": "The faculty or action of forming new ideas or images not present to the senses.",
+        "answers": [
+            "そうぞう",
+            "創造"
+        ],
+        "audio": "https://example.com/imagination.mp3"
+    },
+    {
+        "english": "revolution",
+        "japanese": [
+            "かくめい",
+            "革命"
+        ],
+        "definition": "A forcible overthrow of a government or social order in favor of a new system.",
+        "answers": [
+            "かくめい",
+            "革命"
+        ],
+        "audio": "https://example.com/revolution.mp3"
+    },
+    {
+        "english": "research",
+        "japanese": [
+            "けんきゅう",
+            "研究"
+        ],
+        "definition": "The systematic investigation into and study of materials and sources.",
+        "answers": [
+            "けんきゅう",
+            "研究"
+        ],
+        "audio": "https://example.com/research.mp3"
+    },
+    {
+        "english": "tradition",
+        "japanese": [
+            "でんとう",
+            "伝統"
+        ],
+        "definition": "Customs or beliefs passed down from generation to generation.",
+        "answers": [
+            "でんとう",
+            "伝統"
+        ],
+        "audio": "https://example.com/tradition.mp3"
+    },
+    {
+        "english": "complex",
+        "japanese": [
+            "ふくざつ",
+            "複雑"
+        ],
+        "definition": "Consisting of many different and connected parts; not simple.",
+        "answers": [
+            "ふくざつ",
+            "複雑"
+        ],
+        "audio": "https://example.com/complex.mp3"
+    },
+    {
+        "english": "advanced",
+        "japanese": [
+            "こうきゅう",
+            "高級"
+        ],
+        "definition": "Far on or ahead in development or progress.",
+        "answers": [
+            "こうきゅう",
+            "高級"
+        ],
+        "audio": "https://example.com/advanced.mp3"
+    },
+    {
+        "english": "human rights",
+        "japanese": [
+            "じんけん",
+            "人権"
+        ],
+        "definition": "Rights believed to belong justifiably to every person.",
+        "answers": [
+            "じんけん",
+            "人権"
+        ],
+        "audio": "https://example.com/human_rights.mp3"
+    },
+    {
+        "english": "culture",
+        "japanese": [
+            "ぶんか",
+            "文化"
+        ],
+        "definition": "The ideas, customs, and social behavior of a particular people or society.",
+        "answers": [
+            "ぶんか",
+            "文化"
+        ],
+        "audio": "https://example.com/culture.mp3"
+    },
+    {
+        "english": "sustainability",
+        "japanese": [
+            "しえん",
+            "支援"
+        ],
+        "definition": "The ability to be maintained at a certain rate or level, especially without harming the environment.",
+        "answers": [
+            "しえん",
+            "支援"
+        ],
+        "audio": "https://example.com/sustainability.mp3"
+    },
+    {
+        "english": "technology",
+        "japanese": [
+            "ぎじゅつ",
+            "技術"
+        ],
+        "definition": "The application of scientific knowledge for practical purposes.",
+        "answers": [
+            "ぎじゅつ",
+            "技術"
+        ],
+        "audio": "https://example.com/technology.mp3"
+    },
+    {
+        "english": "innovation",
+        "japanese": [
+            "はっこう",
+            "発行"
+        ],
+        "definition": "A new method, idea, product, etc.",
+        "answers": [
+            "はっこう",
+            "発行"
+        ],
+        "audio": "https://example.com/innovation.mp3"
+    },
+    {
+        "english": "history",
+        "japanese": [
+            "れきし",
+            "歴史"
+        ],
+        "definition": "The study of past events.",
+        "answers": [
+            "れきし",
+            "歴史"
+        ],
+        "audio": "https://example.com/history.mp3"
+    },
+    {
+        "english": "environment",
+        "japanese": [
+            "かんきょう",
+            "環境"
+        ],
+        "definition": "The surroundings or conditions in which a person, animal, or plant lives or operates.",
+        "answers": [
+            "かんきょう",
+            "環境"
+        ],
+        "audio": "https://example.com/environment.mp3"
+    },
+    {
+        "english": "education",
+        "japanese": [
+            "きょういく",
+            "教育"
+        ],
+        "definition": "The process of receiving or giving systematic instruction.",
+        "answers": [
+            "きょういく",
+            "教育"
+        ],
+        "audio": "https://example.com/education.mp3"
+    },
+    {
+        "english": "communication",
+        "japanese": [
+            "こうつう",
+            "交通"
+        ],
+        "definition": "The imparting or exchanging of information or news.",
+        "answers": [
+            "こうつう",
+            "交通"
+        ],
+        "audio": "https://example.com/communication.mp3"
+    },
+    {
+        "english": "law",
+        "japanese": [
+            "ほうりつ",
+            "法律"
+        ],
+        "definition": "A system of rules that a particular country or community recognizes as regulating the actions of its members.",
+        "answers": [
+            "ほうりつ",
+            "法律"
+        ],
+        "audio": "https://example.com/law.mp3"
+    },
+    {
+        "english": "consequence",
+        "japanese": [
+            "けっか",
+            "結果"
+        ],
+        "definition": "A result or effect of an action or condition.",
+        "answers": [
+            "けっか",
+            "結果"
+        ],
+        "audio": "https://example.com/consequence.mp3"
+    },
+    {
+        "english": "theory",
+        "japanese": [
+            "りろん",
+            "理論"
+        ],
+        "definition": "A set of ideas intended to explain something, especially one based on general principles independent of the thing to be explained.",
+        "answers": [
+            "りろん",
+            "理論"
+        ],
+        "audio": "https://example.com/theory.mp3"
+    },
+    {
+        "english": "policy",
+        "japanese": [
+            "せいさく",
+            "政策"
+        ],
+        "definition": "A course or principle of action adopted or proposed by an organization or individual.",
+        "answers": [
+            "せいさく",
+            "政策"
+        ],
+        "audio": "https://example.com/policy.mp3"
+    },
+    {
+        "english": "contract",
+        "japanese": [
+            "けいやく",
+            "契約"
+        ],
+        "definition": "A written or spoken agreement that is intended to be enforceable by law.",
+        "answers": [
+            "けいやく",
+            "契約"
+        ],
+        "audio": "https://example.com/contract.mp3"
+    },
+    {
+        "english": "investment",
+        "japanese": [
+            "とうし",
+            "投資"
+        ],
+        "definition": "The action or process of investing money for profit or material result.",
+        "answers": [
+            "とうし",
+            "投資"
+        ],
+        "audio": "https://example.com/investment.mp3"
+    },
+    {
+        "english": "negotiation",
+        "japanese": [
+            "こうしょう",
+            "交渉"
+        ],
+        "definition": "Discussion aimed at reaching an agreement.",
+        "answers": [
+            "こうしょう",
+            "交渉"
+        ],
+        "audio": "https://example.com/negotiation.mp3"
+    },
+    {
+        "english": "experiment",
+        "japanese": [
+            "じっけん",
+            "実験"
+        ],
+        "definition": "A scientific procedure undertaken to test a hypothesis.",
+        "answers": [
+            "じっけん",
+            "実験"
+        ],
+        "audio": "https://example.com/experiment.mp3"
+    },
+    {
+        "english": "achievement",
+        "japanese": [
+            "せいこう",
+            "成功"
+        ],
+        "definition": "A thing done successfully, typically by effort, courage, or skill.",
+        "answers": [
+            "せいこう",
+            "成功"
+        ],
+        "audio": "https://example.com/achievement.mp3"
+    },
+    {
+        "english": "diplomacy",
+        "japanese": [
+            "がいこう",
+            "外交"
+        ],
+        "definition": "The profession, activity, or skill of managing international relations.",
+        "answers": [
+            "がいこう",
+            "外交"
+        ],
+        "audio": "https://example.com/diplomacy.mp3"
+    },
+    {
+        "english": "leadership",
+        "japanese": [
+            "りーダーシップ",
+            "リーダーシップ"
+        ],
+        "definition": "The action of leading a group of people or an organization.",
+        "answers": [
+            "りーダーシップ",
+            "リーダーシップ"
+        ],
+        "audio": "https://example.com/leadership.mp3"
+    },
+    {
+        "english": "criticism",
+        "japanese": [
+            "ひょうか",
+            "評価"
+        ],
+        "definition": "The expression of disapproval of someone or something based on perceived faults or mistakes.",
+        "answers": [
+            "ひょうか",
+            "評価"
+        ],
+        "audio": "https://example.com/criticism.mp3"
+    },
+    {
+        "english": "artificial intelligence",
+        "japanese": [
+            "じんこうちのう",
+            "人工知能"
+        ],
+        "definition": "The simulation of human intelligence processes by machines, especially computer systems.",
+        "answers": [
+            "じんこうちのう",
+            "人工知能"
+        ],
+        "audio": "https://example.com/artificial_intelligence.mp3"
+    },
+    {
+        "english": "automation",
+        "japanese": [
+            "じどうか",
+            "自動化"
+        ],
+        "definition": "The use of largely automatic equipment in a system of operation or production.",
+        "answers": [
+            "じどうか",
+            "自動化"
+        ],
+        "audio": "https://example.com/automation.mp3"
+    },
+    {
+        "english": "progress",
+        "japanese": [
+            "しんぽ",
+            "進歩"
+        ],
+        "definition": "Forward or onward movement toward a destination, especially a better state.",
+        "answers": [
+            "しんぽ",
+            "進歩"
+        ],
+        "audio": "https://example.com/progress.mp3"
+    },
+    {
+        "english": "information",
+        "japanese": [
+            "じょうほう",
+            "情報"
+        ],
+        "definition": "Data that is processed or organized in a meaningful way to be useful for decision-making.",
+        "answers": [
+            "じょうほう",
+            "情報"
+        ],
+        "audio": "https://example.com/information.mp3"
+    },
+    {
+        "english": "philanthropy",
+        "japanese": [
+            "こうけん",
+            "貢献"
+        ],
+        "definition": "The desire to promote the welfare of others, typically through the donation of money, resources, or time.",
+        "answers": [
+            "こうけん",
+            "貢献"
+        ],
+        "audio": "https://example.com/philanthropy.mp3"
+    },
+    {
+        "english": "critique",
+        "japanese": [
+            "ひょうろん",
+            "評論"
+        ],
+        "definition": "A detailed analysis and assessment of something, especially a literary, philosophical, or political theory.",
+        "answers": [
+            "ひょうろん",
+            "評論"
+        ],
+        "audio": "https://example.com/critique.mp3"
+    },
+    {
+        "english": "debate",
+        "japanese": [
+            "ぎろん",
+            "議論"
+        ],
+        "definition": "A formal discussion on a particular topic, in which opposing arguments are put forward.",
+        "answers": [
+            "ぎろん",
+            "議論"
+        ],
+        "audio": "https://example.com/debate.mp3"
+    }
 ]
